@@ -46,15 +46,19 @@ class TestSuite {
    * Runs the test suite.
    */
   public async run (): Promise<void> {
-    const promises: Array<Promise<any>> = []
+    this.log('Starting tasks...')
     for (const task of this.tasks) {
-      const p = await task.start()
-      if (p) {
-        promises.push(p)
-      }
+      await task.start()
     }
 
-    await Promise.all(promises)
+    this.log('Waiting all tasks to terminate.')
+    for (const task of this.tasks) {
+      await task.wait()
+    }
+  }
+
+  protected log (s: string): void {
+    console.log('TestSuite: ' + s)
   }
 
   /**

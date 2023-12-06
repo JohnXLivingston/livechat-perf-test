@@ -24,7 +24,7 @@ class ChromiumTask extends Task {
     }
   }
 
-  public async start (): Promise<Promise<any>> {
+  public async start (): Promise<void> {
     const video = Video.singleton()
     const url = video.url()
 
@@ -40,12 +40,13 @@ class ChromiumTask extends Task {
     const p = new Promise((resolve) => {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       setTimeout(async () => {
+        this.log('Closing the browser.')
         await page.close()
         await browser.close()
         resolve(true)
       }, this.duration)
     })
-    return p
+    this.waitFor(p)
   }
 }
 

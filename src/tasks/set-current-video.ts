@@ -18,9 +18,8 @@ class SetCurrentVideoTask extends Task {
     this.uuid = uuid
   }
 
-  public async start (): Promise<null> {
+  public async start (): Promise<void> {
     Video.setCurrent(this.uuid)
-    return null
   }
 }
 
