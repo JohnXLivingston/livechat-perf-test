@@ -1,0 +1,43 @@
+{
+  "name": "livechat-perf-test",
+  "version": "0.0.1",
+  "description": "Performances test suite for peertube-plugin-livechat",
+  "main": "npx ts-node ./src/index.ts",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "npx ts-node ./src/index.ts",
+    "lint": "eslint ./src",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnXLivingston/livechat-perf-test.git"
+  },
+  "author": "John Livingston",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/JohnXLivingston/livechat-perf-test/issues"
+  },
+  "homepage": "https://github.com/JohnXLivingston/livechat-perf-test#readme",
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.2",
+    "@types/node": "^20.10.3",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "yaml": "^2.3.4"
+  }
+}

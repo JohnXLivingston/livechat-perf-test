@@ -1,0 +1,7 @@
+tasks:
+  # - name: create_live
+  - name: wait
+    duration: 1000
+  # - name: chromium
+  #   profile: true
+  #   during: 20000
