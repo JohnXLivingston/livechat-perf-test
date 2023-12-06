@@ -1,7 +1,10 @@
 tasks:
+  - name: set_current_video
+    uuid: 'c5d20adf-1088-4d40-bbfc-1abb42d20b05'
   # - name: create_live
   - name: wait
     duration: 1000
-  # - name: chromium
-  #   profile: true
-  #   during: 20000
+  - name: chromium
+    # profile: true
+    duration: 10000
+    headless: false

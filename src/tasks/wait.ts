@@ -15,18 +15,17 @@ class WaitTask extends Task {
     }
   }
 
-  public async init (): Promise<null> {
+  public async start (): Promise<null> {
     this.log('Waiting for ' + this.duration.toString() + 'ms.')
+    // The Wait task waits before returning.
     const p = new Promise((resolve) => {
       setTimeout(() => {
         resolve(true)
       }, this.duration)
     })
     await p
-    return null
+    return null // no other promise to wait after the start.
   }
-
-  public async run (): Promise<void> {}
 }
 
 export {

@@ -48,7 +48,7 @@ class TestSuite {
   public async run (): Promise<void> {
     const promises: Array<Promise<any>> = []
     for (const task of this.tasks) {
-      const p = await task.init()
+      const p = await task.start()
       if (p) {
         promises.push(p)
       }

@@ -27,6 +27,16 @@ class Server {
   }
 
   /**
+   * Return the Peertube url
+   */
+  public url (): string {
+    let url = 'http'
+    if (this.options.https) { url += 's' }
+    url += '://' + this.options.domain + '/'
+    return url
+  }
+
+  /**
    * Gets the Server singleton
    * @returns the server singleton
    */
