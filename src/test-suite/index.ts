@@ -4,6 +4,9 @@ import { parse } from 'yaml'
 import fs from 'fs'
 import path from 'path'
 
+/**
+ * Handles a test suite.
+ */
 class TestSuite {
   public readonly name: string
   public readonly workingDir: string
@@ -19,6 +22,9 @@ class TestSuite {
     this.configFile = path.resolve(this.workingDir, 'config.yml')
   }
 
+  /**
+   * Reads the configuration file, and load tasks.
+   */
   public async readConfig (): Promise<void> {
     const fileContent = await fs.promises.readFile(this.configFile)
     const content = parse(fileContent.toString())
@@ -36,6 +42,9 @@ class TestSuite {
     }
   }
 
+  /**
+   * Runs the test suite.
+   */
   public async run (): Promise<void> {
     const promises: Array<Promise<any>> = []
     for (const task of this.tasks) {
@@ -48,6 +57,11 @@ class TestSuite {
     await Promise.all(promises)
   }
 
+  /**
+   * Load the test suite configuration.
+   * @param testSuiteName the test suite to load
+   * @returns the TestSuite object
+   */
   public static async load (testSuiteName: string): Promise<TestSuite> {
     if (!testSuiteName.match(/^[a-zA-Z0-9_-]+$/)) {
       throw new Error('Invalid test suite name')

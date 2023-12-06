@@ -1,7 +1,11 @@
 import { Task } from './abstract'
 
+/**
+ * This task waits for a specified delay (in ms).
+ */
 class WaitTask extends Task {
   duration: number = 1000
+
   constructor (definition: any) {
     super(definition)
 

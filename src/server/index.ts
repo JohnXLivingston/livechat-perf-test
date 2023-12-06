@@ -26,6 +26,10 @@ class Server {
     this.name = options.name
   }
 
+  /**
+   * Gets the Server singleton
+   * @returns the server singleton
+   */
   public static singleton (): Server {
     if (!singleton) {
       throw new Error('Too soon to call the Server.singleton, not initialized yet.')
