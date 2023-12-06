@@ -8,3 +8,6 @@ tasks:
     # profile: true
     duration: 10000
     headless: false
+    nickname: testBot
+    talk:
+      delay: 1000

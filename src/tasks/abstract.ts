@@ -2,7 +2,7 @@ let count = 1
 
 abstract class Task {
   private readonly definition: any
-  private readonly taskNumber: number
+  protected readonly taskNumber: number
   private readonly waitPromises: Array<Promise<any>> = []
 
   constructor (definition: any) {
