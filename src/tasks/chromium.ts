@@ -50,7 +50,7 @@ class ChromiumTask extends Task {
     this.log('Loading url ' + url + ' using puppeteer...')
 
     const browser = await puppeteer.launch({
-      headless: this.headless
+      headless: this.headless ? 'new' : false
     })
     const page = await browser.newPage()
     await page.goto(url)

@@ -7,7 +7,7 @@ tasks:
   - name: chromium
     # profile: true
     duration: 10000
-    headless: false
+    headless: true
     nickname: testBot
     talk:
       delay: 1000
