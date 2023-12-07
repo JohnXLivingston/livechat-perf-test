@@ -1,4 +1,5 @@
 import type { Page } from 'puppeteer'
+import { Server } from '../server'
 import { Task } from './abstract'
 import { Video } from '../video'
 import puppeteer from 'puppeteer'
@@ -13,6 +14,7 @@ interface TalkOptions {
 class ChromiumTask extends Task {
   protected readonly duration: number = 10000
   protected readonly headless: boolean = true
+  protected readonly login: string | null = null
   protected readonly nickname: string | null = null
   protected readonly talkOptions: TalkOptions | null = null
   protected talkInterval: NodeJS.Timeout | null = null
@@ -29,6 +31,9 @@ class ChromiumTask extends Task {
     }
     if ('headless' in definition) {
       this.headless = !!definition.headless
+    }
+    if ('login' in definition) {
+      this.login = definition.login.toString()
     }
     if ('nickname' in definition) {
       this.nickname = definition.nickname.toString()
@@ -53,6 +58,7 @@ class ChromiumTask extends Task {
       headless: this.headless ? 'new' : false
     })
     const page = await browser.newPage()
+    await this.logIn(page)
     await page.goto(url)
 
     await this.setNickname(page)
@@ -81,11 +87,34 @@ class ChromiumTask extends Task {
    */
   protected async setNickname (page: Page): Promise<void> {
     if (!this.nickname) { return }
+    if (this.login) { return } // no nickname to choose when using an existing account
     const nickSelector = 'input[name=nick]'
     await page.waitForSelector(nickSelector)
     await page.click(nickSelector)
     await page.keyboard.type(this.nickname)
     await page.keyboard.press('Enter')
+  }
+
+  /**
+   * Logs in the user.
+   * @param page the puppeteer page
+   */
+  protected async logIn (page: Page): Promise<void> {
+    if (!this.login) { return }
+    const server = Server.singleton()
+    const user = server.getUser(this.login)
+    if (!user) {
+      throw new Error('Can`t find user ' + this.login)
+    }
+    await page.goto(server.loginUrl())
+    await page.waitForSelector('#username')
+    await page.waitForSelector('#password')
+    await page.click('#username')
+    await page.keyboard.type(user.login)
+    await page.click('#password')
+    await page.keyboard.type(user.password)
+    await page.keyboard.press('Enter')
+    await page.waitForNavigation()
   }
 
   /**

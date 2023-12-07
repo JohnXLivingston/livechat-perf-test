@@ -40,9 +40,10 @@ servers:
   - name: server1
     domain: videos.server1.tld
     https: false
-    peertube_user:
-      login: test
-      password: the_peertube_user_password
+    peertube_users:
+      - login: test
+        password: the_peertube_user_password
+        key: user_01 # this is optional, and can be used by several tests to find the correct user credentials.
 ```
 
 Note: you can add multiple servers. The first one will be used by default.

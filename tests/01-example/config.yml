@@ -10,6 +10,11 @@ tasks:
     # profile: true
     duration: 10000
     headless: true
-    nickname: testBot
-    # talk:
-    #   delay: 1000
+    login: user_01
+  - type: chromium
+    name: talking_bot_browser
+    duration: 5000
+    headless: true
+    nickname: talkingBot
+    talk:
+      delay: 1000

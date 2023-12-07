@@ -2,14 +2,17 @@ import { parse } from 'yaml'
 import fs from 'fs'
 import path from 'path'
 
+interface User {
+  login: string
+  password: string
+  key?: string
+}
+
 interface ServerOptions {
   name: string
   domain: string
   https: boolean
-  peertube_user: {
-    login: string
-    password: string
-  }
+  peertube_users: User[]
 }
 
 let singleton: Server | null = null
@@ -27,13 +30,28 @@ class Server {
   }
 
   /**
-   * Return the Peertube url
+   * Returns the Peertube url
    */
   public url (): string {
     let url = 'http'
     if (this.options.https) { url += 's' }
     url += '://' + this.options.domain + '/'
     return url
+  }
+
+  /**
+   * Returns the login page url
+   */
+  public loginUrl (): string {
+    return this.url() + 'login'
+  }
+
+  /**
+   * Get the user informations.
+   * @param key user key
+   */
+  public getUser (key: string): User | undefined {
+    return this.options.peertube_users.find(u => key === u.key)
   }
 
   /**
