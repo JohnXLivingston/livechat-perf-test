@@ -1,6 +1,6 @@
 tasks:
   - type: set_current_video
-    uuid: 'c5d20adf-1088-4d40-bbfc-1abb42d20b05'
+    key: video_01
   # - type: create_live
   - type: wait
     name: wait_one_second

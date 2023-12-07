@@ -44,6 +44,10 @@ servers:
       - login: test
         password: the_peertube_user_password
         key: user_01 # this is optional, and can be used by several tests to find the correct user credentials.
+    videos:
+      # Some tests need an already existing chat room.
+      - key: video_01
+        uuid: 'c5d20adf-1088-4d40-bbfc-1abb42d20b05'
 ```
 
 Note: you can add multiple servers. The first one will be used by default.

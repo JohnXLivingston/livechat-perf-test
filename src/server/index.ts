@@ -13,6 +13,10 @@ interface ServerOptions {
   domain: string
   https: boolean
   peertube_users: User[]
+  videos?: Array<{
+    key: string
+    uuid: string
+  }>
 }
 
 let singleton: Server | null = null
@@ -52,6 +56,15 @@ class Server {
    */
   public getUser (key: string): User | undefined {
     return this.options.peertube_users.find(u => key === u.key)
+  }
+
+  /**
+   * Gets the video uuid, by key.
+   * @param key video key
+   * @returns the video uuid
+   */
+  public getVideoUuid (key: string): string | undefined {
+    return this.options.videos?.find(v => v.key === key)?.uuid
   }
 
   /**

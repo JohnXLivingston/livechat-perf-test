@@ -1,3 +1,4 @@
+import { Server } from '../server'
 import { Task } from './abstract'
 import { Video } from '../video'
 
@@ -11,7 +12,15 @@ class SetCurrentVideoTask extends Task {
   constructor (definition: any) {
     super(definition)
 
-    const uuid = definition.uuid
+    const key: string = definition.key.toString()
+    if (!key) {
+      throw new Error('Missing video key')
+    }
+    const uuid = Server.singleton().getVideoUuid(key)
+    if (!uuid) {
+      throw new Error('Missing video ' + key + ' for this server.')
+    }
+
     if ((typeof uuid !== 'string') || !uuid.match(/^[a-zA-Z0-9-]+$/)) {
       throw new Error('Invalid uuid')
     }
