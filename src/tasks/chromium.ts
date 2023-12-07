@@ -88,11 +88,13 @@ class ChromiumTask extends Task {
   protected async setNickname (page: Page): Promise<void> {
     if (!this.nickname) { return }
     if (this.login) { return } // no nickname to choose when using an existing account
-    const nickSelector = 'input[name=nick]'
-    await page.waitForSelector(nickSelector)
-    await page.click(nickSelector)
-    await page.keyboard.type(this.nickname)
-    await page.keyboard.press('Enter')
+    const nickField = await page.waitForSelector('input[name=nick]')
+    if (!nickField) {
+      throw new Error('Can find nickname field')
+    }
+    await nickField.type(this.nickname)
+    await nickField.press('Enter')
+    await nickField.dispose()
   }
 
   /**
@@ -107,13 +109,19 @@ class ChromiumTask extends Task {
       throw new Error('Can`t find user ' + this.login)
     }
     await page.goto(server.loginUrl())
-    await page.waitForSelector('#username')
-    await page.waitForSelector('#password')
-    await page.click('#username')
-    await page.keyboard.type(user.login)
-    await page.click('#password')
-    await page.keyboard.type(user.password)
-    await page.keyboard.press('Enter')
+    const userNameField = await page.waitForSelector('#username')
+    const passwordField = await page.waitForSelector('#password')
+    if (!userNameField) {
+      throw new Error('No username field')
+    }
+    if (!passwordField) {
+      throw new Error('No password field')
+    }
+    await userNameField.type(user.login)
+    await passwordField.type(user.password)
+    await passwordField.press('Enter')
+    await userNameField.dispose()
+    await passwordField.dispose()
     await page.waitForNavigation()
   }
 
@@ -131,16 +139,16 @@ class ChromiumTask extends Task {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.talkInterval = setInterval(async () => {
       try {
-        const selector = '.chat-textarea'
-        await page.waitForSelector(selector)
-        await page.click(selector)
-        await page.keyboard.type(
+        const field = await page.waitForSelector('.chat-textarea')
+        if (!field) { return }
+        await field.type(
           'I\'m task ' +
           this.name +
           ', and I\'m writing a random number: ' +
           Math.random().toString()
         )
-        await page.keyboard.press('Enter')
+        await field.press('Enter')
+        await field.dispose()
       } catch (err) {
         // Can fail if we have closed the browser... so just ignore exceptions.
       }
