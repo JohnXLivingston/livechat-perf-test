@@ -1,12 +1,16 @@
+import type { TestSuite } from '../test-suite'
+
 let count = 1
 
 abstract class Task {
+  protected readonly suite: TestSuite
   public readonly name: string
   private readonly definition: any
   protected readonly taskNumber: number
   private readonly waitPromises: Array<Promise<any>> = []
 
-  constructor (definition: any) {
+  constructor (suite: TestSuite, definition: any) {
+    this.suite = suite
     this.definition = definition
     this.taskNumber = count++
     this.name = definition.name ?? 'T' + this.taskNumber.toString()

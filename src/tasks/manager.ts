@@ -1,4 +1,5 @@
 import type { Task } from './abstract'
+import type { TestSuite } from '../test-suite'
 import { WaitTask } from './wait'
 import { SetCurrentVideoTask } from './set-current-video'
 import { ChromiumTask } from './chromium'
@@ -8,7 +9,7 @@ import { ChromiumTask } from './chromium'
  * @param definition task definition
  * @returns a Task object
  */
-function initTask (definition: any): Task {
+function initTask (suite: TestSuite, definition: any): Task {
   const type = definition?.type
   if (!type || (typeof type !== 'string')) {
     throw new Error('Invalid task type')
@@ -16,11 +17,11 @@ function initTask (definition: any): Task {
 
   switch (type) {
     case 'wait':
-      return new WaitTask(definition)
+      return new WaitTask(suite, definition)
     case 'set_current_video':
-      return new SetCurrentVideoTask(definition)
+      return new SetCurrentVideoTask(suite, definition)
     case 'chromium':
-      return new ChromiumTask(definition)
+      return new ChromiumTask(suite, definition)
     default: throw new Error('Unknown task ' + type)
   }
 }

@@ -7,7 +7,7 @@ tasks:
     duration: 1000
   - type: chromium
     name: main_browser
-    # profile: true
+    trace: true
     duration: 10000
     headless: true
     login: user_01

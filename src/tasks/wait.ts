@@ -1,3 +1,4 @@
+import type { TestSuite } from '../test-suite'
 import { Task } from './abstract'
 
 /**
@@ -6,8 +7,8 @@ import { Task } from './abstract'
 class WaitTask extends Task {
   duration: number = 1000
 
-  constructor (definition: any) {
-    super(definition)
+  constructor (suite: TestSuite, definition: any) {
+    super(suite, definition)
 
     const duration = definition.duration
     if (duration && (typeof duration === 'number')) {

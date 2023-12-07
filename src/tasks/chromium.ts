@@ -1,3 +1,4 @@
+import type { TestSuite } from '../test-suite'
 import type { Page } from 'puppeteer'
 import { Server } from '../server'
 import { Task } from './abstract'
@@ -18,9 +19,10 @@ class ChromiumTask extends Task {
   protected readonly nickname: string | null = null
   protected readonly talkOptions: TalkOptions | null = null
   protected talkInterval: NodeJS.Timeout | null = null
+  protected readonly trace: boolean = false
 
-  constructor (definition: any) {
-    super(definition)
+  constructor (suite: TestSuite, definition: any) {
+    super(suite, definition)
 
     if (definition.duration && (typeof definition.duration === 'number')) {
       if (typeof definition.duration === 'number') {
@@ -46,6 +48,8 @@ class ChromiumTask extends Task {
         this.nickname = 'Bot for test task ' + this.name
       }
     }
+
+    this.trace = !!definition.trace
   }
 
   public async start (): Promise<void> {
@@ -58,6 +62,13 @@ class ChromiumTask extends Task {
       headless: this.headless ? 'new' : false
     })
     const page = await browser.newPage()
+
+    if (this.trace) {
+      await page.tracing.start({
+        path: await this.suite.getResultFilepath(this.name + '.trace.json')
+      })
+    }
+
     await this.logIn(page)
     await page.goto(url)
 
@@ -71,6 +82,9 @@ class ChromiumTask extends Task {
       setTimeout(async () => {
         if (this.talkInterval) {
           clearInterval(this.talkInterval)
+        }
+        if (this.trace) {
+          await page.tracing.stop()
         }
         this.log('Closing the browser.')
         await page.close()

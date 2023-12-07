@@ -1,3 +1,4 @@
+import type { TestSuite } from '../test-suite'
 import { Server } from '../server'
 import { Task } from './abstract'
 import { Video } from '../video'
@@ -9,8 +10,8 @@ import { Video } from '../video'
 class SetCurrentVideoTask extends Task {
   public readonly uuid: string
 
-  constructor (definition: any) {
-    super(definition)
+  constructor (suite: TestSuite, definition: any) {
+    super(suite, definition)
 
     const key: string = definition.key.toString()
     if (!key) {
