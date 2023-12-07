@@ -1,13 +1,15 @@
 tasks:
-  - name: set_current_video
+  - type: set_current_video
     uuid: 'c5d20adf-1088-4d40-bbfc-1abb42d20b05'
-  # - name: create_live
-  - name: wait
+  # - type: create_live
+  - type: wait
+    name: wait_one_second
     duration: 1000
-  - name: chromium
+  - type: chromium
+    name: main_browser
     # profile: true
     duration: 10000
     headless: true
     nickname: testBot
-    talk:
-      delay: 1000
+    # talk:
+    #   delay: 1000

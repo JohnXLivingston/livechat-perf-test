@@ -9,19 +9,19 @@ import { ChromiumTask } from './chromium'
  * @returns a Task object
  */
 function initTask (definition: any): Task {
-  const name = definition?.name
-  if (!name || (typeof name !== 'string')) {
-    throw new Error('Invalid task name')
+  const type = definition?.type
+  if (!type || (typeof type !== 'string')) {
+    throw new Error('Invalid task type')
   }
 
-  switch (name) {
+  switch (type) {
     case 'wait':
       return new WaitTask(definition)
     case 'set_current_video':
       return new SetCurrentVideoTask(definition)
     case 'chromium':
       return new ChromiumTask(definition)
-    default: throw new Error('Unknown task ' + name)
+    default: throw new Error('Unknown task ' + type)
   }
 }
 

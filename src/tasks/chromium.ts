@@ -38,7 +38,7 @@ class ChromiumTask extends Task {
       this.talkOptions = definition.talk
       if (!this.nickname) {
         // Before being able to talk, we must set a nickname if not provided...
-        this.nickname = 'Bot for test task ' + this.taskNumber.toString()
+        this.nickname = 'Bot for test task ' + this.name
       }
     }
   }
@@ -106,8 +106,8 @@ class ChromiumTask extends Task {
         await page.waitForSelector(selector)
         await page.click(selector)
         await page.keyboard.type(
-          'I\'m task n°' +
-          this.taskNumber.toString() +
+          'I\'m task ' +
+          this.name +
           ', and I\'m writing a random number: ' +
           Math.random().toString()
         )

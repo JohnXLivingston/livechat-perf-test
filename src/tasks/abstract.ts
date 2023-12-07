@@ -1,6 +1,7 @@
 let count = 1
 
 abstract class Task {
+  public readonly name: string
   private readonly definition: any
   protected readonly taskNumber: number
   private readonly waitPromises: Array<Promise<any>> = []
@@ -8,6 +9,7 @@ abstract class Task {
   constructor (definition: any) {
     this.definition = definition
     this.taskNumber = count++
+    this.name = definition.name ?? 'T' + this.taskNumber.toString()
   }
 
   /**
@@ -23,7 +25,7 @@ abstract class Task {
   }
 
   protected log (s: string): void {
-    console.log('Task ' + this.taskNumber.toString() + ': ' + s)
+    console.log('Task ' + this.name + ': ' + s)
   }
 
   /**
