@@ -80,3 +80,17 @@ Note: if your Peertube instance requires email verification, you must mark them 
 
 Note: the script can fail with "Too many request" responses if you try to create too many users.
 In such case, try the '--dont-test-login' option.
+
+There are options to only create specified users.
+
+## Set avatars
+
+You can set avatars to users (usefull to test avatars performances):
+
+```bash
+npm run start -- set-users-avatars --server the_server_key
+```
+
+This will randomly set avatars to users (if they already have an avatar, it will be ignored).
+
+There are options to only set to specified users.

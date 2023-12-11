@@ -1,3 +1,4 @@
+import type { OptionsOfJSONResponseBody, CancelableRequest, Options } from 'got'
 import { User, Server } from '../index'
 import got from 'got'
 
@@ -22,6 +23,22 @@ class ApiSession {
   constructor (user: User, token: Token) {
     this.user = user
     this.token = token
+  }
+
+  async requestJSON (url: string, parameters?: Options): Promise<CancelableRequest> {
+    parameters ??= {}
+    parameters.method ??= 'GET'
+    parameters.responseType ??= 'json'
+    parameters.resolveBodyOnly ??= true
+
+    // Adding the Bearer headers:
+    parameters.headers ??= {}
+    parameters.headers.Authorization = this.token.tokenType + ' ' + this.token.accessToken
+
+    return got(
+      url,
+      parameters as OptionsOfJSONResponseBody
+    ).json()
   }
 
   static async getUserSession (user: User): Promise<ApiSession> {

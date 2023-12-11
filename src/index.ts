@@ -1,6 +1,7 @@
 import { Command } from 'commander'
 import { initRunCommand } from './commands/run'
 import { initCreateUsersCommand } from './commands/create-users'
+import { initSetUsersAvatarsCommand } from './commands/set-users-avatars'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const version = require('../package.json').version
@@ -18,5 +19,6 @@ program.option(
 
 initRunCommand(program)
 initCreateUsersCommand(program)
+initSetUsersAvatarsCommand(program)
 
 program.parse(process.argv)
