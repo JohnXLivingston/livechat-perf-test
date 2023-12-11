@@ -23,6 +23,7 @@
   "homepage": "https://github.com/JohnXLivingston/livechat-perf-test#readme",
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
+    "@types/got": "^9.6.12",
     "@types/node": "^20.10.3",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "commander": "^11.1.0",
+    "got": "^11.8.6",
     "puppeteer": "^21.6.0",
     "yaml": "^2.3.4"
   }

@@ -43,6 +43,7 @@ servers:
     peertube_users:
       - login: test
         password: the_peertube_user_password
+        mail: 'john@example.com' # required if we want the user to be created using the 'create-users' command
         key: user_01 # this is optional, and can be used by several tests to find the correct user credentials.
     videos:
       # Some tests need an already existing chat room.
@@ -64,3 +65,18 @@ You can check `tests/01-example\config.yml` for an example.
 ```bash
 npm run start -- run --test '01-example'
 ```
+
+## Create test users
+
+If you need several users, you can use the `create-users` command to create users defined in the server's configuration file:
+
+```bash
+npm run start -- create-users --server the_server_key
+```
+
+Note: if your Peertube instance needs approval for registered users, you must do it yourself after running this script.
+
+Note: if your Peertube instance requires email verification, you must mark them as verified.
+
+Note: the script can fail with "Too many request" responses if you try to create too many users.
+In such case, try the '--dont-test-login' option.
