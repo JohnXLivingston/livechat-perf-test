@@ -141,16 +141,15 @@ class MonitorServerTask extends Task {
 
   protected async spawn (cmd: string, pseudoTty?: boolean): Promise<ChildProcess> {
     const server = Server.singleton()
-    const sshCmd = server.getSSHCommand().split(/\s+/).filter(s => s !== '')
-    const args = sshCmd.slice(1)
+    const spawnArgs = server.getSSHArguments()
     if (pseudoTty) {
-      args.push('-t')
+      spawnArgs.push('-t')
     }
-    args.push(cmd)
+    spawnArgs.push(cmd)
 
     const cp = spawn(
-      sshCmd[0],
-      args
+      'ssh',
+      spawnArgs
     )
 
     cp.on('error', (err) => {

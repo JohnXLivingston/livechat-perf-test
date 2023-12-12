@@ -81,7 +81,17 @@ class Server {
    * Will add an extra space at the end, so you can concat to any command to run.
    */
   public getSSHCommand (): string {
-    return 'ssh ' + (this.options.ssh_domain ?? this.options.domain) + ' '
+    // FIXME: we should escape/quote all parameters
+    return 'ssh ' + this.getSSHArguments().join(' ') + ' '
+  }
+
+  /**
+   * Returns the ssh arguments to pass to connect to the server.
+   */
+  public getSSHArguments (): string[] {
+    return [
+      this.options.ssh_domain ?? this.options.domain
+    ]
   }
 
   /**
