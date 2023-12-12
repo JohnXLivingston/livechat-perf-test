@@ -3,6 +3,7 @@ import type { TestSuite } from '../test-suite'
 import { WaitTask } from './wait'
 import { SetCurrentVideoTask } from './set-current-video'
 import { ChromiumTask } from './chromium'
+import { MonitorServerTask } from './monitor-server'
 
 /**
  * Task factory: creates the Task object from the configuration.
@@ -22,6 +23,8 @@ function initTask (suite: TestSuite, definition: any): Task {
       return new SetCurrentVideoTask(suite, definition)
     case 'chromium':
       return new ChromiumTask(suite, definition)
+    case 'monitor_server':
+      return new MonitorServerTask(suite, definition)
     default: throw new Error('Unknown task ' + type)
   }
 }

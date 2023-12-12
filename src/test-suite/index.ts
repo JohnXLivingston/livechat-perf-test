@@ -7,6 +7,12 @@ import path from 'path'
 interface TestSuiteResults {
   run: string
   comments?: string
+  data: {[taskname: string]: {[dataName: string]: Data[]}}
+}
+
+interface Data {
+  timestamp: number
+  value: number
 }
 
 /**
@@ -91,7 +97,8 @@ class TestSuite {
     this.log('Preparing results directory and data for run ' + runName)
     this.results = {
       run: runName,
-      comments: this.comments
+      comments: this.comments,
+      data: {}
     }
     this.resultsDir = this.overrideOutputDir
       ? path.resolve(this.overrideOutputDir, runName)
@@ -125,6 +132,24 @@ class TestSuite {
       throw new Error('Calling getResultFilepath without any result directory...')
     }
     return path.resolve(this.resultsDir, name)
+  }
+
+  /**
+   * Add a data measure in the result set.
+   * @param task the task
+   * @param measureName the measure name
+   * @param value the value
+   */
+  public addData (task: Task, measureName: string, value: number): void {
+    if (!this.results) {
+      throw new Error('Calling addData too soon, no results for now.')
+    }
+    this.results.data[task.name] ??= {}
+    this.results.data[task.name][measureName] ??= []
+    this.results.data[task.name][measureName].push({
+      timestamp: Date.now(),
+      value: value
+    })
   }
 
   /**

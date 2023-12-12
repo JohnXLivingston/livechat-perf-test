@@ -7,6 +7,7 @@ import { Peertube } from './peertube'
 interface ServerOptions {
   name: string
   domain: string
+  ssh_domain?: string
   https: boolean
   peertube_users: User[]
   videos?: Array<{
@@ -73,6 +74,14 @@ class Server {
    */
   public getVideoUuid (key: string): string | undefined {
     return this.options.videos?.find(v => v.key === key)?.uuid
+  }
+
+  /**
+   * Returns the ssh command to connect to the server.
+   * Will add an extra space at the end, so you can concat to any command to run.
+   */
+  public getSSHCommand (): string {
+    return 'ssh ' + (this.options.ssh_domain ?? this.options.domain) + ' '
   }
 
   /**

@@ -2,6 +2,9 @@ tasks:
   - type: set_current_video
     key: video_01
   # - type: create_live
+  - type: monitor_server
+    name: monitor_server
+    duration: 15000
   - type: wait
     name: wait_one_second
     duration: 1000

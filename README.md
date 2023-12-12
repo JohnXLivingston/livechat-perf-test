@@ -39,6 +39,7 @@ You must also configure your Peertube server by adding a `config/servers.yml` fi
 servers:
   - name: server1
     domain: videos.server1.tld
+    ssh_domain: videos.server1.tld # if given, the domain to use for ssh. If not given, will use domain.
     https: false
     peertube_users:
       - login: test
