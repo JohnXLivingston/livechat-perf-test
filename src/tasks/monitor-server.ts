@@ -31,12 +31,12 @@ class MonitorServerTask extends Task {
 
   public async start (): Promise<void> {
     const pids = await this.getPIDs()
-    console.log('Found following pids on the server: ', pids)
+    this.log('Found following pids on the server: ' + JSON.stringify(pids))
     const top = await this.spawn('top -b -p ' + Object.values(pids).join(','))
 
     const pTop = new Promise((resolve) => {
       top.on('close', () => {
-        console.log('Top closed.')
+        this.log('Top closed.')
         resolve(true)
       })
     })
@@ -74,14 +74,14 @@ class MonitorServerTask extends Task {
     // )
     // const pNethogs = new Promise((resolve) => {
     //   nethogs.on('close', () => {
-    //     console.log('Nethogs closed.')
+    //     this.log('Nethogs closed.')
     //     resolve(true)
     //   })
     // })
     // this.waitFor(pNethogs)
 
     // nethogs.stdout?.on('data', data => {
-    //   console.log(data.toString())
+    //   this.log(data.toString())
     // })
 
     setTimeout(() => {
