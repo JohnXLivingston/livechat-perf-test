@@ -1,10 +1,15 @@
 tasks:
-  - type: set_current_video
-    key: video_01
-  # - type: create_live
   - type: monitor_server
     name: monitor_server
     duration: 15000
+
+  # You can use an existing video for the tests:
+  # - type: set_current_video
+  #   key: video_01 # This is a key to a video in your servers.yml file.
+  # Or you can create a live stream for tests:
+  - type: create_live
+    user: user_01
+
   - type: wait
     name: wait_two_second
     duration: 2000

@@ -25,6 +25,12 @@ class ApiSession {
     this.token = token
   }
 
+  /**
+   * Makes an API call.
+   * @param url the API's url
+   * @param parameters parameters for the request. Same as `got` options.
+   * @returns the result
+   */
   async requestJSON (url: string, parameters?: Options): Promise<CancelableRequest> {
     parameters ??= {}
     parameters.method ??= 'GET'
@@ -41,6 +47,11 @@ class ApiSession {
     ).json()
   }
 
+  /**
+   * Gets an object to query for the specified user.
+   * @param user user
+   * @returns an ApiSession object
+   */
   static async getUserSession (user: User): Promise<ApiSession> {
     if (sessions.has(user.login)) {
       return sessions.get(user.login) as ApiSession
@@ -79,6 +90,10 @@ class ApiSession {
     return session
   }
 
+  /**
+   * Gets the OAuth2 client for the Peertube server.
+   * @returns Oauth2 client infos
+   */
   static async getClient (): Promise<Client> {
     if (client) return client
 

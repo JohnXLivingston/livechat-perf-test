@@ -4,6 +4,7 @@ import { WaitTask } from './wait'
 import { SetCurrentVideoTask } from './set-current-video'
 import { ChromiumTask } from './chromium'
 import { MonitorServerTask } from './monitor-server'
+import { CreateLiveTask } from './create-live'
 
 /**
  * Task factory: creates the Task object from the configuration.
@@ -25,6 +26,8 @@ function initTask (suite: TestSuite, definition: any): Task {
       return new ChromiumTask(suite, definition)
     case 'monitor_server':
       return new MonitorServerTask(suite, definition)
+    case 'create_live':
+      return new CreateLiveTask(suite, definition)
     default: throw new Error('Unknown task ' + type)
   }
 }
