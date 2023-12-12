@@ -19,6 +19,8 @@ You must also install the following tools:
 
 You must then create a user on your Peertube instance. This user will be used to create new videos, to test the chat.
 
+Note: for now, monitoring the processes bandwidth is not working. Don't really understand why. The `nethogs` installation is not needed until it works.
+
 ### On the computer running the test suite
 
 * NodeJS 18
