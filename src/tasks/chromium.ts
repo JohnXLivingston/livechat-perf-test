@@ -155,12 +155,14 @@ class ChromiumTask extends Task {
       try {
         const field = await page.waitForSelector('.chat-textarea')
         if (!field) { return }
-        await field.type(
-          'I\'m task ' +
+
+        const msg = 'I\'m task ' +
           this.name +
           ', and I\'m writing a random number: ' +
           Math.random().toString()
-        )
+
+        await field.type(msg)
+
         await field.press('Enter')
         await field.dispose()
       } catch (err) {
