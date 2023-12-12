@@ -8,10 +8,12 @@ let singleton: Video | null = null
 class Video {
   public readonly uuid: string
   protected readonly server: Server
+  public readonly canBeDeleted: boolean = false
 
-  constructor (server: Server, uuid: string) {
+  constructor (server: Server, uuid: string, canBeDeleted: boolean = false) {
     this.server = server
     this.uuid = uuid
+    this.canBeDeleted = canBeDeleted
   }
 
   /**
@@ -24,9 +26,10 @@ class Video {
   /**
    * Sets the current video.
    * @param uuid the video uuid
+   * @param canBeDeleted if true, we will allow the deletion of this video by the delete_current_live task
    */
-  public static setCurrent (uuid: string): void {
-    singleton = new Video(Server.singleton(), uuid)
+  public static setCurrent (uuid: string, canBeDeleted?: boolean): void {
+    singleton = new Video(Server.singleton(), uuid, canBeDeleted ?? false)
   }
 
   /**

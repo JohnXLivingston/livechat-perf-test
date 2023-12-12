@@ -65,7 +65,7 @@ class CreateLiveTask extends Task {
       }
     )
 
-    Video.setCurrent(uuid)
+    Video.setCurrent(uuid, true)
   }
 
   /**

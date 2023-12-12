@@ -5,6 +5,7 @@ import { SetCurrentVideoTask } from './set-current-video'
 import { ChromiumTask } from './chromium'
 import { MonitorServerTask } from './monitor-server'
 import { CreateLiveTask } from './create-live'
+import { DeleteCurrentLive } from './delete-current-live'
 
 /**
  * Task factory: creates the Task object from the configuration.
@@ -28,6 +29,8 @@ function initTask (suite: TestSuite, definition: any): Task {
       return new MonitorServerTask(suite, definition)
     case 'create_live':
       return new CreateLiveTask(suite, definition)
+    case 'delete_current_live':
+      return new DeleteCurrentLive(suite, definition)
     default: throw new Error('Unknown task ' + type)
   }
 }
