@@ -34,16 +34,19 @@ class MonitorServerTask extends Task {
     console.log('Found following pids on the server: ', pids)
     const top = await this.spawn('top -b -p ' + Object.values(pids).join(','))
 
-    const p = new Promise((resolve) => {
-      top.on('close', () => resolve(true))
+    const pTop = new Promise((resolve) => {
+      top.on('close', () => {
+        console.log('Top closed.')
+        resolve(true)
+      })
     })
-    this.waitFor(p)
+    this.waitFor(pTop)
 
     top.stdout?.on('data', data => {
       const ps: {[pid: string]: number} = {}
       data.toString()
         .split('\n')
-        .splice(1) // get rid of the title line
+        .slice(1) // get rid of the title line
         .forEach((line: string) => {
           const s = line.split(/\s+/)
           const pid = s[0]
@@ -65,8 +68,25 @@ class MonitorServerTask extends Task {
       }
     })
 
+    // const nethogs = await this.spawn(
+    //   '/usr/sbin/nethogs -P ' + Object.values(pids).join(' -P '),
+    //   true
+    // )
+    // const pNethogs = new Promise((resolve) => {
+    //   nethogs.on('close', () => {
+    //     console.log('Nethogs closed.')
+    //     resolve(true)
+    //   })
+    // })
+    // this.waitFor(pNethogs)
+
+    // nethogs.stdout?.on('data', data => {
+    //   console.log(data.toString())
+    // })
+
     setTimeout(() => {
       top.kill()
+      // nethogs.kill()
     }, this.duration)
   }
 
@@ -119,16 +139,24 @@ class MonitorServerTask extends Task {
     return stdout
   }
 
-  protected async spawn (cmd: string): Promise<ChildProcess> {
+  protected async spawn (cmd: string, pseudoTty?: boolean): Promise<ChildProcess> {
     const server = Server.singleton()
-    const sshCmd = server.getSSHCommand().split(/\s+/)
-    const args = sshCmd.splice(1)
+    const sshCmd = server.getSSHCommand().split(/\s+/).filter(s => s !== '')
+    const args = sshCmd.slice(1)
+    if (pseudoTty) {
+      args.push('-t')
+    }
     args.push(cmd)
 
     const cp = spawn(
       sshCmd[0],
       args
     )
+
+    cp.on('error', (err) => {
+      console.error(err)
+      throw new Error('Command failed: ' + cmd)
+    })
 
     return cp
   }

@@ -6,8 +6,8 @@ tasks:
     name: monitor_server
     duration: 15000
   - type: wait
-    name: wait_one_second
-    duration: 1000
+    name: wait_two_second
+    duration: 2000
   - type: chromium
     name: main_browser
     trace: true
