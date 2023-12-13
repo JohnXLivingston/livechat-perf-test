@@ -1,5 +1,6 @@
 import type { Task } from '../tasks/abstract'
 import { initTask } from '../tasks/manager'
+import { generateCPUChart } from '../lib/chart'
 import { parse } from 'yaml'
 import fs from 'fs'
 import path from 'path'
@@ -7,6 +8,7 @@ import path from 'path'
 interface TestSuiteResults {
   run: string
   comments?: string
+  start: number
   data: {[taskname: string]: {[dataName: string]: Data[]}}
 }
 
@@ -98,7 +100,8 @@ class TestSuite {
     this.results = {
       run: runName,
       comments: this.comments,
-      data: {}
+      data: {},
+      start: Date.now()
     }
     this.resultsDir = this.overrideOutputDir
       ? path.resolve(this.overrideOutputDir, runName)
@@ -119,6 +122,7 @@ class TestSuite {
       path.resolve(this.resultsDir, 'data.json'),
       JSON.stringify(this.results)
     )
+    await this.generateCharts()
   }
 
   /**
@@ -153,6 +157,27 @@ class TestSuite {
   }
 
   /**
+   * Generates charts using the results.
+   */
+  protected async generateCharts (): Promise<void> {
+    if (!this.results) {
+      throw new Error('No results, too soon to call generateCharts')
+    }
+    if (!this.resultsDir) {
+      throw new Error('Missing resultsDir')
+    }
+    for (const taskName in this.results.data) {
+      const taskData = this.results.data[taskName]
+      await generateCPUChart(
+        taskName,
+        this.results.start,
+        taskData,
+        path.resolve(this.resultsDir, taskName + '.png')
+      )
+    }
+  }
+
+  /**
    * Load the test suite configuration.
    * @param testSuiteName the test suite to load
    * @param options Some options to pass to the constructor.
@@ -180,5 +205,6 @@ class TestSuite {
 }
 
 export {
-  TestSuite
+  TestSuite,
+  Data
 }
