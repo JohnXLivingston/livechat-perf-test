@@ -3,11 +3,19 @@ import type { Page } from 'puppeteer'
 import { Server } from '../server'
 import { Task } from './abstract'
 import { Video } from '../video'
+import { execPromisified } from '../lib/exec'
 import puppeteer from 'puppeteer'
 
 interface TalkOptions {
   delay: number
 }
+
+interface ChromiumPids {
+  task: Task
+  pids: string[]
+}
+
+const mainPids = new Map<Task, number>()
 
 /**
  * This task starts a chromium that opens the current video's chat.
@@ -61,6 +69,12 @@ class ChromiumTask extends Task {
     const browser = await puppeteer.launch({
       headless: this.headless ? 'new' : false
     })
+    const pid = browser.process()?.pid
+    if (pid) {
+      this.log('Browser started with PID ' + (pid.toString() ?? ''))
+      mainPids.set(this, pid)
+    }
+
     const page = await browser.newPage()
 
     if (this.trace) {
@@ -169,6 +183,22 @@ class ChromiumTask extends Task {
         // Can fail if we have closed the browser... so just ignore exceptions.
       }
     }, this.talkOptions?.delay)
+  }
+
+  /**
+   * Returns for each running task the list of all corresponding PIDs.
+   */
+  public static async getAllChromiumPids (): Promise<ChromiumPids[]> {
+    const result: ChromiumPids[] = []
+    for (const [task, mainPID] of mainPids.entries()) {
+      const { stdout } = await execPromisified('pstree -p ' + mainPID.toString())
+      const pids = new Set([...stdout.matchAll(/\((\d+)\)/g)].map(m => m[1]).sort())
+      result.push({
+        task,
+        pids: [...pids.values()]
+      })
+    }
+    return result
   }
 }
 

@@ -28,6 +28,7 @@ Note: for now, monitoring the processes bandwidth is not working. Don't really u
 * ssh access to a user on the Peertube server, correctly setup in your `.ssh/config`
 * gnuplot
 * zip
+* pstree
 
 Clone the repository and install the dependencies:
 

@@ -28,7 +28,7 @@ async function generateCPUChart (
   gnuplot.stdin.write(
     'set term png\n' +
     'set output "' + outputPath + '"\n' +
-    'set title "%CPU ' + title.replace('_', ' ') + '"\n' +
+    'set title "%CPU ' + title.replace(/_/g, ' ') + '"\n' +
     'set ylabel "%CPU"\n' +
     'set xlabel "Seconds"\n'
   )
@@ -37,7 +37,7 @@ async function generateCPUChart (
   gnuplot.stdin.write(
     'plot ' +
     Object.keys(data).map((name, i) => {
-      const cleanName = name.replace('_', ' ')
+      const cleanName = name.replace(/_/g, ' ')
       return '"-" using 1:2 with linespoints linecolor ' + (i + 1).toString() + ' title "' + cleanName + '" '
     }).join(', ') +
     '\n'

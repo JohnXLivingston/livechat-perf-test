@@ -1,10 +1,8 @@
 import type { TestSuite } from '../test-suite'
 import { Server } from '../server'
 import { Task } from './abstract'
-import { exec, spawn, ChildProcess } from 'node:child_process'
-import util from 'node:util'
-
-const execPromisified = util.promisify(exec)
+import { execPromisified } from '../lib/exec'
+import { spawn, ChildProcess } from 'node:child_process'
 
 interface PSResult {
   pid: string
@@ -50,8 +48,11 @@ class MonitorServerTask extends Task {
       const ps: {[pid: string]: number} = {}
       data.toString()
         .split('\n')
-        .slice(1) // get rid of the title line
         .forEach((line: string) => {
+          line = line.trim()
+          // ignore title and summary lines:
+          if (!/^\d+\s+/.test(line)) { return }
+
           const s = line.split(/\s+/)
           const pid = s[0]
           const cpu = parseFloat(

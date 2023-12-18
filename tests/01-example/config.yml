@@ -3,6 +3,12 @@ tasks:
     name: monitor_server
     duration: 15000
 
+  - type: monitor_chromium
+    # This task add some monitoring to all chromium browser launched by the script.
+    # Avoid using the "trace" option on chromium tasks, as it will also monitor CPU usage for the tracing tool.
+    name: monitor_chromium
+    duration: 15000
+
   # You can use an existing video for the tests:
   # - type: set_current_video
   #   key: video_01 # This is a key to a video in your servers.yml file.
