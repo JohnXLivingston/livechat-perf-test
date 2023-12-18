@@ -34,6 +34,14 @@ tasks:
     talk:
       delay: 1000
 
+  - type: external_component_bot
+    name: external_component_bot_1
+    duration: 5000
+    nickname: bot_01
+    external_component: external_01 # this is the key in your servers.yml file
+    talk:
+      delay: 1000
+
   # Let some time to tests...
   - type: wait
     name: waiting_for_tests

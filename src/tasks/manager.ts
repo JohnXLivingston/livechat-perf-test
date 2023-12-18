@@ -7,6 +7,7 @@ import { MonitorServerTask } from './monitor-server'
 import { MonitorChromiumTask } from './monitor-chromium'
 import { CreateLiveTask } from './create-live'
 import { DeleteCurrentLive } from './delete-current-live'
+import { ExternalComponentBotTask } from './external-component-bot'
 
 /**
  * Task factory: creates the Task object from the configuration.
@@ -34,6 +35,8 @@ function initTask (suite: TestSuite, definition: any): Task {
       return new CreateLiveTask(suite, definition)
     case 'delete_current_live':
       return new DeleteCurrentLive(suite, definition)
+    case 'external_component_bot':
+      return new ExternalComponentBotTask(suite, definition)
     default: throw new Error('Unknown task ' + type)
   }
 }

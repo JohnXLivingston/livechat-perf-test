@@ -4,6 +4,12 @@ import fs from 'fs'
 import path from 'path'
 import { Peertube } from './peertube'
 
+interface ExternalComponent {
+  key?: string
+  name: string
+  password: string
+}
+
 interface ServerOptions {
   name: string
   domain: string
@@ -14,6 +20,10 @@ interface ServerOptions {
     key: string
     uuid: string
   }>
+  xmpp_external_components?: {
+    port: number
+    components: ExternalComponent[]
+  }
 }
 
 let singleton: Server | null = null
@@ -30,6 +40,10 @@ class Server {
     this.options = options
     this.name = options.name
     this.peertube = new Peertube()
+  }
+
+  public domain (): string {
+    return this.options.domain
   }
 
   /**
@@ -80,9 +94,9 @@ class Server {
    * Returns the ssh command to connect to the server.
    * Will add an extra space at the end, so you can concat to any command to run.
    */
-  public getSSHCommand (): string {
+  public getSSHCommand (commandLineOptions?: string): string {
     // FIXME: we should escape/quote all parameters
-    return 'ssh ' + this.getSSHArguments().join(' ') + ' '
+    return 'ssh ' + (commandLineOptions ?? '') + ' ' + this.getSSHArguments().join(' ') + ' '
   }
 
   /**
@@ -92,6 +106,24 @@ class Server {
     return [
       this.options.ssh_domain ?? this.options.domain
     ]
+  }
+
+  /**
+   * Returns the port for extern components on your peertube server.
+   */
+  public getExternalComponentPort (): number {
+    if (!this.options?.xmpp_external_components?.port) {
+      throw new Error('No port configured for external components.')
+    }
+    return this.options.xmpp_external_components.port
+  }
+
+  /**
+   * Get the external component informations.
+   * @param key user key
+   */
+  public getExternalComponent (key: string): ExternalComponent | undefined {
+    return this.options.xmpp_external_components?.components?.find(c => key === c.key)
   }
 
   /**
