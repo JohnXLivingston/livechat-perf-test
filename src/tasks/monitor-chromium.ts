@@ -23,7 +23,6 @@ class MonitorChromiumTask extends Task {
   }
 
   public async start (): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.topInterval = setInterval(() => {
       this.waitFor(this.top())
     }, 200)
