@@ -53,4 +53,4 @@ Here is the CPU load on the server:
 ![CPU](results/2023-12-13T16:14:23.925Z/monitor_server.png)
 
 Here is a chromium trace file for one of the browser used in the test: [trace file](./results//2023-12-13T16:14:23.925Z/talking_bot_browser_01.trace.json.zip).
-You can open it on [www.speedscope.app](https://www.speedscope.app/) for example (after unziping it).
+You can open it on [www.speedscope.app](https://www.speedscope.app/) for example (after unziping it), or loading it in a Chromium browser (open `chrome://tracing/`, and load the zip file).
