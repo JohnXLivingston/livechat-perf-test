@@ -4,6 +4,7 @@ import { generateCPUChart } from '../lib/chart'
 import { parse } from 'yaml'
 import fs from 'fs'
 import path from 'path'
+import { execSync } from 'child_process'
 
 interface TestSuiteResults {
   run: string
@@ -123,6 +124,7 @@ class TestSuite {
       JSON.stringify(this.results)
     )
     await this.generateCharts()
+    await this.compressTraceFiles()
   }
 
   /**
@@ -174,6 +176,27 @@ class TestSuite {
         taskData,
         path.resolve(this.resultsDir, taskName + '.png')
       )
+    }
+  }
+
+  /**
+   * Chromium trace files can use a lot of space, and won't be accepted by github (max file size is 100Mb).
+   * So we will compress them as zip.
+   * In addition, the .gitignore files will ignore files ending with '.trace.json'.
+   */
+  public async compressTraceFiles (): Promise<void> {
+    if (!this.resultsDir) {
+      throw new Error('Too soon to call compressTraceFiles, no resultsDir')
+    }
+    const files = await fs.promises.readdir(this.resultsDir)
+    for (const file of files) {
+      if (!file.endsWith('.trace.json')) { continue }
+      this.log('Compressing trace file: ' + file)
+      execSync('zip \'' + file + '.zip\' \'' + file + '\'', {
+        cwd: this.resultsDir
+      })
+      this.log('Removing original trace file')
+      await fs.promises.rm(path.resolve(this.resultsDir, file))
     }
   }
 
