@@ -17,7 +17,7 @@ You must also install the following tools:
 * install the livechat plugin
 * set the max concurrent lives to -1 on your instance, and the max per user to -1 (to avoid reaching the limit if you don't delete videos)
 
-You must then create a user on your Peertube instance. This user will be used to create new videos, to test the chat.
+The test suite will use some peertube users for some tests. There is a script to create them. See below.
 
 Note: for now, monitoring the processes bandwidth is not working. Don't really understand why. The `nethogs` installation is not needed until it works.
 
