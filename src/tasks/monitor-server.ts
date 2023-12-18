@@ -32,7 +32,11 @@ class MonitorServerTask extends Task {
   public async start (): Promise<void> {
     const pids = await this.getPIDs()
     this.log('Found following pids on the server: ' + JSON.stringify(pids))
-    const top = await this.spawn('top -b -p ' + Object.values(pids).join(','))
+    // Top options:
+    // * -d: delay between measures
+    // * -b: batch mode
+    // * -p: coma-separated list of pids to monitor
+    const top = await this.spawn('top -d 0.2 -b -p ' + Object.values(pids).join(','))
 
     const pTop = new Promise((resolve) => {
       top.on('close', () => {
