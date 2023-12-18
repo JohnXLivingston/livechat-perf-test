@@ -88,7 +88,23 @@ class TestSuite {
   }
 
   protected log (s: string): void {
-    console.log('TestSuite: ' + s)
+    const time = this.secondsSinceStart()
+    if (time === null) {
+      console.log('TestSuite: ' + s)
+    } else {
+      console.log('TestSuite (' + time.toFixed(3) + 's): ' + s)
+    }
+  }
+
+  /**
+   * Returns the time, in second, since the start of the test suite.
+   * If not started yet, returns null.
+   */
+  public secondsSinceStart (): number | null {
+    if (!this.results?.start) {
+      return null
+    }
+    return (Date.now() - this.results.start) / 1000
   }
 
   /**

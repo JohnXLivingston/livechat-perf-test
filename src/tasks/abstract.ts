@@ -29,7 +29,9 @@ abstract class Task {
   }
 
   protected log (s: string): void {
-    console.log('Task ' + this.name + ': ' + s)
+    const time = this.suite.secondsSinceStart()
+    const timeString = time === null ? '' : ' (' + time.toFixed(3) + 's)'
+    console.log('Task ' + this.name + timeString + ': ' + s)
   }
 
   /**
