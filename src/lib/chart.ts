@@ -26,7 +26,7 @@ async function generateCPUChart (
   })
 
   gnuplot.stdin.write(
-    'set term png\n' +
+    'set term png size 1080, 720\n' +
     'set output "' + outputPath + '"\n' +
     'set title "%CPU ' + title.replace(/_/g, ' ') + '"\n' +
     'set ylabel "%CPU"\n' +
