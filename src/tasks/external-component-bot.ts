@@ -132,6 +132,7 @@ class ExternalComponentBotTask extends Task {
     if (sshTunnel.count <= 0 && sshTunnel.tunnelProcess) {
       this.log('Killing the SSH Tunnel')
       sshTunnel.tunnelProcess.kill() // FIXME: wait?
+      sshTunnel.tunnelProcess = null
     }
   }
 }
