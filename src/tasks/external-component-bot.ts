@@ -119,7 +119,7 @@ class ExternalComponentBotTask extends Task {
     this.log('Waiting for the tunnel...')
     const pTunnel = new Promise((resolve) => {
       sshTunnel.tunnelProcess?.stdout?.once('data', () => {
-        this.log('Tunnel has writtend on stdout, assuming it is started')
+        this.log('Tunnel has written on stdout, assuming it is started')
         resolve(true)
       })
     })
