@@ -23,7 +23,7 @@ interface Data {
  */
 class TestSuite {
   public readonly name: string
-  protected readonly runNameSuffix?: string
+  protected readonly runName: string
   public readonly suiteDir: string
   public readonly configFile: string
   public readonly tasks: Task[] = []
@@ -38,11 +38,11 @@ class TestSuite {
     suiteDir: string
     comments?: string
     overrideOutputDir?: string
-    runNameSuffix?: string
+    runName?: string
   }) {
     this.name = options.name
     this.suiteDir = options.suiteDir
-    this.runNameSuffix = options.runNameSuffix
+    this.runName = options.runName ?? (new Date()).toISOString()
     this.overrideOutputDir = options.overrideOutputDir ?? null
     this.comments = options.comments
     this.configFile = path.resolve(this.suiteDir, 'config.yml')
@@ -111,18 +111,20 @@ class TestSuite {
    * Prepare the result directory, and all related objects.
    */
   protected async prepareResults (): Promise<void> {
-    const runName = (new Date()).toISOString() + (this.runNameSuffix ?? '')
-
-    this.log('Preparing results directory and data for run ' + runName)
+    this.log('Preparing results directory and data for run ' + this.runName)
     this.results = {
-      run: runName,
+      run: this.runName,
       comments: this.comments,
       data: {},
       start: Date.now()
     }
     this.resultsDir = this.overrideOutputDir
-      ? path.resolve(this.overrideOutputDir, runName)
-      : path.resolve(this.suiteDir, 'results', runName)
+      ? path.resolve(this.overrideOutputDir, this.runName)
+      : path.resolve(this.suiteDir, 'results', this.runName)
+
+    if (fs.existsSync(this.resultsDir)) {
+      throw new Error('Directory already exists, please choose another run name: ' + this.resultsDir)
+    }
 
     this.log('Results will be in: ' + this.resultsDir)
     await fs.promises.mkdir(this.resultsDir, {
@@ -224,7 +226,7 @@ class TestSuite {
    */
   public static async load (testSuiteName: string, options: {
     overrideOutputDir?: string
-    runNameSuffix?: string
+    runName?: string
     comments?: string
   }): Promise<TestSuite> {
     if (!testSuiteName.match(/^[a-zA-Z0-9_-]+$/)) {
@@ -235,7 +237,7 @@ class TestSuite {
       name: testSuiteName,
       suiteDir,
       overrideOutputDir: options.overrideOutputDir,
-      runNameSuffix: options.runNameSuffix,
+      runName: options.runName,
       comments: options.comments
     })
     await testSuite.readConfig()

@@ -10,8 +10,8 @@ function initRunCommand (program: Command): void {
     'The test name. There must be a folder with this name in the `tests` directory.'
   )
   cmd.option(
-    '--run-suffix <suffix>',
-    'A suffix to add to the run result dir name.'
+    '--run-name <name>',
+    'The name for the run. Will be used as folder name in the output directory. Defaults to current datetime.'
   )
   cmd.option(
     '--comments <comments>',
@@ -37,7 +37,7 @@ function initRunCommand (program: Command): void {
 
     const suite = await TestSuite.load(testSuite, {
       overrideOutputDir: options.outputDir ?? undefined,
-      runNameSuffix: options.runSuffix ?? undefined,
+      runName: options.runName ?? undefined,
       comments: options.comments ?? undefined
     })
 
