@@ -76,6 +76,8 @@ This tests proves that the lack of message pruning in plugin v8.0.3 cause a bott
 The CPU usage stays at 100% after the bots stop talking (bots stops at 213s, but the CPU continue to work a few seconds).
 This can explain [issue #142](https://github.com/JohnXLivingston/peertube-plugin-livechat/issues/142).
 
+On the server side, everything is ok. So in following tests, we will not show the server load charts (but you can find the files in the results folders).
+
 ## 2023-12-19
 
 [Run results](./results/2023-12-19T14:45:10.797Z/).
@@ -139,10 +141,6 @@ Tests finished.
 Chromium CPU:
 
 ![Chromium CPU](./results/2023-12-19T14:45:10.797Z/monitor_chromium.png)
-
-Server CPU:
-
-![ServerCPU](./results/2023-12-19T14:45:10.797Z/monitor_server.png)
 
 ### 2023-12-19 Conclusion
 
@@ -213,10 +211,6 @@ Tests finished.
 Chromium CPU:
 
 ![Chromium CPU](./results/03-prune-message-above-100/monitor_chromium.png)
-
-Server CPU:
-
-![ServerCPU](./results/03-prune-message-above-100/monitor_server.png)
 
 ### 03-prune-message-above-100 Conclusion
 
@@ -309,10 +303,6 @@ Tests finished.
 Chromium CPU:
 
 ![Chromium CPU](./results/04-prune-message-above-100-converse-patched/monitor_chromium.png)
-
-Server CPU:
-
-![ServerCPU](./results/04-prune-message-above-100-converse-patched/monitor_server.png)
 
 ### 04-prune-message-above-100-converse-patched Conclusion
 
