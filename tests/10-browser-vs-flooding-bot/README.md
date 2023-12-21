@@ -4,9 +4,9 @@ In this suite test, we generate a lot of messages using XMPP Bots, and we monito
 
 We will also generate some server monitoring, but as the talking bots are using direct XMPP connections, server CPU usage is not very relevant.
 
-## Runs
+Please find bellow some runs of this test suite.
 
-### 2023-12-18
+## 2023-12-18
 
 Here is a [first run of the tests](./results/2023-12-18T17:52:44.194Z/).
 
@@ -69,16 +69,16 @@ Server CPU:
 
 ![ServerCPU](./results/2023-12-18T17:52:44.194Z/monitor_server.png)
 
-#### 2023-12-18 Conclusion
+### 2023-12-18 Conclusion
 
 This tests proves that the lack of message pruning in plugin v8.0.3 cause a bottleneck in the browser: the CPU raise quickly to 100%.
 
 The CPU usage stays at 100% after the bots stop talking (bots stops at 213s, but the CPU continue to work a few seconds).
 This can explain [issue #142](https://github.com/JohnXLivingston/peertube-plugin-livechat/issues/142).
 
-### 2023-12-19
+## 2023-12-19
 
-[Run result](./results/2023-12-19T14:45:10.797Z/).
+[Run results](./results/2023-12-19T14:45:10.797Z/).
 
 The run has:
 
@@ -144,13 +144,13 @@ Server CPU:
 
 ![ServerCPU](./results/2023-12-19T14:45:10.797Z/monitor_server.png)
 
-#### 2023-12-19 Conclusion
+### 2023-12-19 Conclusion
 
 This test proves that when there are a lot of messages, each single new message can cause a huge CPU load (see the CPU usage when only the third bot speaks once a second).
 
-### 03-prune-message-above-100
+## 03-prune-message-above-100
 
-[Run result](./results/03-prune-message-above-100/).
+[Run results](./results/03-prune-message-above-100/).
 
 The run has:
 
@@ -218,7 +218,7 @@ Server CPU:
 
 ![ServerCPU](./results/03-prune-message-above-100/monitor_server.png)
 
-#### 03-prune-message-above-100 Conclusion
+### 03-prune-message-above-100 Conclusion
 
 The expected results is not here, there is no performance improvements.
 This is due to the way ConverseJS prunes the history: it uses the following code:
@@ -232,9 +232,9 @@ export const debouncedPruneHistory = debounce(pruneHistory, 500)
 In other words: it won't prune any message as long as there are new messages in the coming 500ms.
 So we need to patch ConverseJS to have a valid test. See the next run.
 
-### 04-prune-message-above-100-converse-patched
+## 04-prune-message-above-100-converse-patched
 
-[Run result](./results/04-prune-message-above-100-converse-patched/).
+[Run results](./results/04-prune-message-above-100-converse-patched/).
 
 The run has:
 
@@ -314,8 +314,140 @@ Server CPU:
 
 ![ServerCPU](./results/04-prune-message-above-100-converse-patched/monitor_server.png)
 
-#### 04-prune-message-above-100-converse-patched Conclusion
+### 04-prune-message-above-100-converse-patched Conclusion
 
 Here we can see that pruning message prevents the browser to reach 100% CPU usage.
 You can also notice that there is no more lag when the 2 firsts bots stop talking: the CPU usage drops sooner.
 So the fix is valid.
+
+## 05-empty-message-template
+
+[Run results](./results/05-empty-message-template/).
+
+The run has:
+
+* one browser
+* 1 bot emitting messages every 100ms
+* 1 bot emitting messages every 150ms
+* 1 bot emitting messages every 1000ms, but who will continue to speak longer
+
+Plugin version: v8.0.3 + following modifications:
+
+* Overloading the ConverseJS message template by:
+
+```javascript
+import 'shared/avatar/avatar.js'
+import { html } from 'lit'
+
+export default (_el, _o) => {
+  return html`<div class="message chat-msg"></div>`
+}
+```
+
+In other words: we emptied the template, to see the browser load difference.
+
+The purpose to this test is to evaluate if any template optimization worth the cost.
+
+```bash
+npm run start -- run --test '10-browser-vs-flooding-bot' --server 'server1' --comments 'Runned on server1.' --run-name '05-empty-message-template'
+```
+
+Chromium CPU:
+
+![Chromium CPU](./results/05-empty-message-template/monitor_chromium.png)
+
+### 05-empty-message-template Conclusion
+
+Compared to run `2023-12-19`, the browser takes twice as long to reach 100% CPU usage (~200s instead of ~100s).
+See `06-constant-message-template` for more analysis.
+
+## 06-constant-message-template
+
+[Run results](./results/06-constant-message-template/).
+
+The run has:
+
+* one browser
+* 1 bot emitting messages every 100ms
+* 1 bot emitting messages every 150ms
+* 1 bot emitting messages every 1000ms, but who will continue to speak longer
+
+Plugin version: v8.0.3 + following modifications:
+
+* Overloading the ConverseJS message template by:
+
+```javascript
+import 'shared/avatar/avatar.js'
+import { html } from 'lit'
+
+export default (_el, _o) => {
+  return html`
+<div class="message chat-msg chat-msg--followup delayed groupchat chat-msg--with-avatar moderator owner" data-isodate="2023-12-21T15:33:05.000Z" data-msgid="" data-from="" data-encrypted="">
+
+<!-- Anchor to allow us to scroll the message into view -->
+<a></a>
+
+<!--?lit$761496694$-->
+
+<div class="chat-msg__content chat-msg__content--me ">
+    <!--?lit$761496694$-->
+
+    <div class="chat-msg__body chat-msg__body-- chat-msg__body--received chat-msg__body--delayed">
+        <div class="chat-msg__message">
+            <!--?lit$761496694$-->
+            <!--?lit$761496694$-->
+<!--?lit$761496694$-->
+<!--?lit$761496694$-->
+<span class="chat-msg__body--wrapper">
+<converse-chat-message-body class="chat-msg__text  " hide_url_previews="" text="test"><!----><!--?lit$761496694$--><!---->test<!----><!--?--></converse-chat-message-body>
+<!--?lit$761496694$-->
+<!--?lit$761496694$-->
+</span>
+<!--?lit$761496694$-->
+<div class="chat-msg__error"><!--?lit$761496694$--></div>
+
+        </div>
+        <converse-message-actions><!----><!--?lit$761496694$--><converse-dropdown class="chat-msg__actions dropleft"><!---->
+<button type="button" class="btn btn--transparent btn--standalone" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <converse-icon size="1em" class="fa fa-bars">
+<!----><svg style="width: 1em; height: 1em;"> <use href="#icon-bars"> </use> </svg></converse-icon></button>
+<div class="dropdown-menu">
+    <!--?lit$761496694$--><!---->
+<button class="chat-msg__action chat-msg__action-edit">
+    <converse-icon color="var(--text-color-lighten-15-percent)" size="1em" class="fa fa-pencil-alt"><!----><svg style="width: 1em; height: 1em; fill: rgb(140, 140, 140);"> <use href="#icon-pencil-alt"> </use> </svg></converse-icon>
+    <!--?lit$761496694$-->Edit
+</button>
+<!----><!---->
+<button class="chat-msg__action chat-msg__action-retract">
+    <converse-icon color="var(--text-color-lighten-15-percent)" size="1em" class="fas fa-trash-alt"><!----><svg style="width: 1em; height: 1em; fill: rgb(140, 140, 140);"> <use href="#icon-trash-alt"> </use> </svg></converse-icon>
+    <!--?lit$761496694$-->Retract
+</button>
+<!---->
+</div>
+</converse-dropdown><!--?--></converse-message-actions>
+    </div>
+
+    <!--?lit$761496694$-->
+</div>
+</div>
+`
+}
+```
+
+In other words: we put here a static message (the html was copied from a real chat message), to evaluate the cost of dynamic calculation in templates.
+
+```bash
+npm run start -- run --test '10-browser-vs-flooding-bot' --server 'server1' --comments 'Runned on server1.' --run-name '06-constant-message-template'
+```
+
+Chromium CPU:
+
+![Chromium CPU](./results/06-constant-message-template/monitor_chromium.png)
+
+### 06-constant-message-template Conclusion
+
+Here again, as in run `2023-12-09`, the CPU reached 100% after ~75s.
+So the CPU cost is not in the dynamic part of the ConverseJS template, but is rather in the DOM rendering by the browser.
+
+We must complete these tests by enabling tracing in the browser, and checking what's going on.
+This will be done in the [11-browser-vs-flooding-bot-tracing test suite](../11-browser-vs-flooding-bot-tracing/).
