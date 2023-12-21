@@ -441,3 +441,7 @@ So the CPU cost is not in the dynamic part of the ConverseJS template, but is ra
 
 We must complete these tests by enabling tracing in the browser, and checking what's going on.
 This will be done in the [11-browser-vs-flooding-bot-tracing test suite](../11-browser-vs-flooding-bot-tracing/).
+
+**To conclude**: the message template rendering the browser rendering costs some CPU time.
+After looking at the ConverseJS source code, there is no obvious optimization, and I think it does not worth the cost to try to optimize this.
+Adding the `prune_messages_above` option to ConverseJS seems to be enought to avoid browser crash for long time running chats.
