@@ -161,7 +161,7 @@ The run has:
 
 Plugin version: v8.0.3 + following modifications:
 
-* ConverseJS prune_messages_above parameter to 100 (only keep last 100 messages).
+* ConverseJS prune_messages_above parameter to 100 (only keep last 100 messages). Commit [#6d7a8199ae5ebc21b7276eeff685961cbb13c70b](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/6d7a8199ae5ebc21b7276eeff685961cbb13c70b).
 
 ```bash
 npm run start -- run --test '10-browser-vs-flooding-bot' --server 'server1' --comments 'Runned on server1.' --run-name '03-prune-message-above-100'
@@ -317,4 +317,5 @@ Server CPU:
 #### 04-prune-message-above-100-converse-patched Conclusion
 
 Here we can see that pruning message prevents the browser to reach 100% CPU usage.
+You can also notice that there is no more lag when the 2 firsts bots stop talking: the CPU usage drops sooner.
 So the fix is valid.
