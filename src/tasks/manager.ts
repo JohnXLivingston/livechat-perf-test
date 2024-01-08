@@ -7,7 +7,8 @@ import { MonitorServerTask } from './monitor-server'
 import { MonitorChromiumTask } from './monitor-chromium'
 import { CreateLiveTask } from './create-live'
 import { DeleteCurrentLive } from './delete-current-live'
-import { ExternalComponentBotTask } from './external-component-bot'
+import { ExternalComponentBotTask } from './bot/external-component-bot'
+import { WebsocketAnonymousBotTask } from './bot/websocket-anonymous-bot'
 
 /**
  * Task factory: creates the Task object from the configuration.
@@ -35,6 +36,8 @@ function initTask (suite: TestSuite, definition: any): Task {
       return new CreateLiveTask(suite, definition)
     case 'delete_current_live':
       return new DeleteCurrentLive(suite, definition)
+    case 'websocket_anonymous_bot':
+      return new WebsocketAnonymousBotTask(suite, definition)
     case 'external_component_bot':
       return new ExternalComponentBotTask(suite, definition)
     default: throw new Error('Unknown task ' + type)

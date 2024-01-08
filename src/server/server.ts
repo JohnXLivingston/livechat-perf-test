@@ -49,14 +49,18 @@ class Server {
   /**
    * Returns the Peertube url
    */
-  public url (path?: string): string {
-    let url = 'http'
+  public url (path?: string, scheme?: 'http' | 'ws'): string {
+    let url = scheme ?? 'http'
     if (this.options.https) { url += 's' }
     url += '://' + this.options.domain + '/'
     if (path) {
       url += path
     }
     return url
+  }
+
+  public webSocketUrl (): string {
+    return this.url('plugins/livechat/ws/xmpp-websocket', 'ws')
   }
 
   /**

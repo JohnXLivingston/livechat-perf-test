@@ -1,14 +1,9 @@
-import type { TestSuite } from '../test-suite'
-import { Task } from './abstract'
-import { Server } from '../server'
-import { Video } from '../video'
-import { Bot, HandlerRandomQuotes } from 'xmppjs-chat-bot'
+import type { TestSuite } from '../../test-suite'
+import { BotTask } from '../bot'
+import { Server } from '../../server'
 import { component } from '@xmpp/component'
 import { exec, ChildProcess } from 'node:child_process'
-
-interface TalkOptions {
-  delay: number
-}
+import { Bot } from 'xmppjs-chat-bot'
 
 const sshTunnel: {
   count: number
@@ -22,81 +17,51 @@ const sshTunnel: {
  * This task created a new bot, connecting as a XMPP External Component.
  * Can be used to do some heavy talking.
  */
-class ExternalComponentBotTask extends Task {
-  protected readonly duration: number = 10000
-  protected bot: Bot
+class ExternalComponentBotTask extends BotTask {
   protected readonly externalComponentKey: string
-  protected readonly nickname: string | null = null
-  protected readonly talkOptions: TalkOptions | null = null
+  protected readonly componentDefinition: ReturnType<Server['getExternalComponent']>
   port: number
 
   constructor (suite: TestSuite, definition: any) {
     super(suite, definition)
-
-    if (definition.duration && (typeof definition.duration === 'number')) {
-      if (typeof definition.duration === 'number') {
-        this.duration = definition.duration
-      } else {
-        throw new Error('Invalid duration')
-      }
-    }
 
     if ('external_component' in definition) {
       this.externalComponentKey = definition.external_component.toString()
     } else {
       throw new Error('Missing external_component in definition')
     }
-    if ('nickname' in definition) {
-      this.nickname = definition.nickname.toString()
-    }
-    if ('talk' in definition) {
-      this.talkOptions = definition.talk
-    }
 
     const server = Server.singleton()
     this.port = server.getExternalComponentPort()
-    const componentDefinition = server.getExternalComponent(this.externalComponentKey)
-    if (!componentDefinition) {
+    this.componentDefinition = server.getExternalComponent(this.externalComponentKey)
+    if (!this.componentDefinition) {
       throw new Error('Cant find component ' + this.externalComponentKey)
     }
+  }
 
-    this.bot = new Bot(this.name, component({
+  protected getBot (): Bot {
+    const server = Server.singleton()
+    if (!this.componentDefinition) {
+      throw new Error('Missing component definition')
+    }
+    return new Bot(this.name, component({
       service: 'xmpp://127.0.0.1:' + this.port.toString(),
-      domain: componentDefinition.name + '.' + server.domain(),
-      password: componentDefinition.password
+      domain: this.componentDefinition.name + '.' + server.domain(),
+      password: this.componentDefinition.password
     }))
   }
 
   public async start (): Promise<void> {
     // First, we must ssh port forward:
     await this.openTunnel()
+    return super.start()
+  }
 
-    const server = Server.singleton()
-    const video = Video.singleton()
+  protected async disconnect (): Promise<void> {
+    await super.disconnect()
 
-    await this.bot.connect()
-    const room = await this.bot.joinRoom(video.uuid, 'room.' + server.domain(), this.nickname ?? this.name)
-    const h = new HandlerRandomQuotes(this.name, room, {
-      delay: (this.talkOptions?.delay ?? 1000) / 1000,
-      quotes: [
-        'Bot random quote 1',
-        'Bot random quote 2',
-        'Bot random quote 3',
-        'Bot random quote 4',
-        'Bot random quote 5'
-      ]
-    })
-    await h.start()
-
-    this.waitFor(new Promise((resolve) => {
-      setTimeout(() => {
-        this.log('Disconnecting the bot...')
-        this.bot.disconnect().finally((): void => {
-          this.log('Bot disconnected, closing the ssh tunneling')
-          this.closeTunnel().finally(() => resolve(true))
-        })
-      }, this.duration)
-    }))
+    this.log('Bot disconnected, closing the ssh tunneling')
+    await this.closeTunnel()
   }
 
   protected async openTunnel (): Promise<void> {

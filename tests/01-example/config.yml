@@ -41,6 +41,12 @@ tasks:
     external_component: external_01 # this is the key in your servers.yml file
     talk:
       delay: 1000
+  - type: websocket_anonymous_bot
+    name: websocket_anonymous_bot_1
+    duration: 5000
+    nickname: bot_02_websocket
+    talk:
+      delay: 1000
 
   # Let some time to tests...
   - type: wait
