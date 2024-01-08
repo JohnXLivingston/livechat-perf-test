@@ -65,52 +65,12 @@ abstract class BotTask extends Task {
 
     for (let i = 1; i <= this.botNumber; i++) {
       const suffix = this.botNumber > 1 ? '_' + i.toString() : ''
-      const nicknameSuffix = this.botNumber > 1 ? ' ' + i.toString() : ''
       const bot = this.getBot(this.name + suffix)
       this.bots.push(bot)
 
-      await bot.connect()
-
-      let nickname = (this.nickname ?? this.name) + nicknameSuffix
-      this.log('Bot ' + nickname + ' joins the room ' + video.uuid)
-      const room = await bot.joinRoom(
-        video.uuid,
-        'room.' + server.domain(),
-        nickname
-      )
-
-      if (this.talkOptions) {
-        setTimeout(() => {
-          this.log('Bot ' + nickname + ' starts talking')
-          const h = new HandlerRandomQuotes(this.name, room, {
-            delay: (this.talkOptions?.delay ?? 1000) / 1000,
-            quotes: [
-              'Bot random quote 1',
-              'Bot random quote 2',
-              'Bot random quote 3',
-              'Bot random quote 4',
-              'Bot random quote 5'
-            ]
-          })
-          h.start()
-        }, this.talkOptions.wait ?? 0)
-      }
-
-      if (this.nicknameChangeOptions) {
-        setTimeout(() => {
-          if (this.nicknameChangeOptions) {
-            const oldNickname = nickname
-            nickname = this.nicknameChangeOptions?.nickname + nicknameSuffix
-            this.log('Bot ' + oldNickname + ' changes nickname for ' + nickname)
-            // To change nickname, just join again. This will emit a new presence stanza.
-            bot.joinRoom(
-              video.uuid,
-              'room.' + server.domain(),
-              nickname
-            ).then(() => {}, () => {})
-          }
-        }, this.nicknameChangeOptions.delay)
-      }
+      bot.connect().then(async () => {
+        await this.runBot(bot, i, server, video)
+      }, () => {})
     }
 
     this.waitFor(new Promise((resolve) => {
@@ -118,6 +78,51 @@ abstract class BotTask extends Task {
         this.disconnect().finally(() => resolve(true))
       }, this.duration)
     }))
+  }
+
+  private async runBot (bot: Bot, i: number, server: Server, video: Video): Promise<void> {
+    const nicknameSuffix = this.botNumber > 1 ? ' ' + i.toString() : ''
+    let nickname = (this.nickname ?? this.name) + nicknameSuffix
+
+    this.log('Bot ' + nickname + ' joins the room ' + video.uuid)
+    const room = await bot.joinRoom(
+      video.uuid,
+      'room.' + server.domain(),
+      nickname
+    )
+
+    if (this.talkOptions) {
+      setTimeout(() => {
+        this.log('Bot ' + nickname + ' starts talking')
+        const h = new HandlerRandomQuotes(this.name, room, {
+          delay: (this.talkOptions?.delay ?? 1000) / 1000,
+          quotes: [
+            'Bot random quote 1',
+            'Bot random quote 2',
+            'Bot random quote 3',
+            'Bot random quote 4',
+            'Bot random quote 5'
+          ]
+        })
+        h.start()
+      }, this.talkOptions.wait ?? 0)
+    }
+
+    if (this.nicknameChangeOptions) {
+      setTimeout(() => {
+        if (this.nicknameChangeOptions) {
+          const oldNickname = nickname
+          nickname = this.nicknameChangeOptions?.nickname + nicknameSuffix
+          this.log('Bot ' + oldNickname + ' changes nickname for ' + nickname)
+          // To change nickname, just join again. This will emit a new presence stanza.
+          bot.joinRoom(
+            video.uuid,
+            'room.' + server.domain(),
+            nickname
+          ).then(() => {}, () => {})
+        }
+      }, this.nicknameChangeOptions.delay)
+    }
   }
 
   protected async disconnect (): Promise<void> {
