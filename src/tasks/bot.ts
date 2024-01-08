@@ -6,6 +6,7 @@ import { Bot, HandlerRandomQuotes } from 'xmppjs-chat-bot'
 
 interface TalkOptions {
   delay: number
+  wait?: number
 }
 
 /**
@@ -59,22 +60,30 @@ abstract class BotTask extends Task {
       this.bots.push(bot)
 
       await bot.connect()
+
+      const nickname = (this.nickname ?? this.name) + suffix
       const room = await bot.joinRoom(
         video.uuid,
         'room.' + server.domain(),
-        (this.nickname ?? this.name) + suffix
+        nickname
       )
-      const h = new HandlerRandomQuotes(this.name, room, {
-        delay: (this.talkOptions?.delay ?? 1000) / 1000,
-        quotes: [
-          'Bot random quote 1',
-          'Bot random quote 2',
-          'Bot random quote 3',
-          'Bot random quote 4',
-          'Bot random quote 5'
-        ]
-      })
-      await h.start()
+
+      if (this.talkOptions) {
+        setTimeout(() => {
+          this.log('Bot ' + nickname + ' starts talking')
+          const h = new HandlerRandomQuotes(this.name, room, {
+            delay: (this.talkOptions?.delay ?? 1000) / 1000,
+            quotes: [
+              'Bot random quote 1',
+              'Bot random quote 2',
+              'Bot random quote 3',
+              'Bot random quote 4',
+              'Bot random quote 5'
+            ]
+          })
+          h.start()
+        }, this.talkOptions.wait ?? 0)
+      }
     }
 
     this.waitFor(new Promise((resolve) => {

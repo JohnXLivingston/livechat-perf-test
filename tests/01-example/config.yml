@@ -41,6 +41,7 @@ tasks:
     external_component: external_01 # this is the key in your servers.yml file
     talk:
       delay: 1000
+      wait: 100 # optional, time to wait before talking
   - type: websocket_anonymous_bot
     name: websocket_anonymous_bot_1
     duration: 5000
@@ -48,6 +49,7 @@ tasks:
     bot_number: 3 # optionnal. If given (and an integer), it will spawn N bots.
     talk:
       delay: 1000
+      wait: 3000 # optional, time to wait before talking
 
   # Let some time to tests...
   - type: wait
