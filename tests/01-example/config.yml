@@ -50,6 +50,9 @@ tasks:
     talk:
       delay: 1000
       wait: 3000 # optional, time to wait before talking
+    nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
+      nickname: bot_02_websocket_new_nickname
+      delay: 2500
 
   # Let some time to tests...
   - type: wait

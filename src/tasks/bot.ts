@@ -9,6 +9,11 @@ interface TalkOptions {
   wait?: number
 }
 
+interface NickNameChangeOptions {
+  nickname: string
+  delay: number
+}
+
 /**
  * Abstract class that is used by bot tasks (see in the "bot" folder for various bots).
  */
@@ -17,6 +22,7 @@ abstract class BotTask extends Task {
   protected bots: Bot[] = []
   protected readonly nickname: string | null = null
   protected readonly talkOptions: TalkOptions | null = null
+  protected readonly nicknameChangeOptions: NickNameChangeOptions | null = null
   protected botNumber: number = 1
 
   constructor (suite: TestSuite, definition: any) {
@@ -35,6 +41,9 @@ abstract class BotTask extends Task {
     }
     if ('talk' in definition) {
       this.talkOptions = definition.talk
+    }
+    if ('nickname_change' in definition) {
+      this.nicknameChangeOptions = definition.nickname_change
     }
 
     if ('bot_number' in definition) {
@@ -61,7 +70,7 @@ abstract class BotTask extends Task {
 
       await bot.connect()
 
-      const nickname = (this.nickname ?? this.name) + suffix
+      let nickname = (this.nickname ?? this.name) + suffix
       const room = await bot.joinRoom(
         video.uuid,
         'room.' + server.domain(),
@@ -83,6 +92,22 @@ abstract class BotTask extends Task {
           })
           h.start()
         }, this.talkOptions.wait ?? 0)
+      }
+
+      if (this.nicknameChangeOptions) {
+        setTimeout(() => {
+          if (this.nicknameChangeOptions) {
+            const oldNickname = nickname
+            nickname = this.nicknameChangeOptions?.nickname + suffix
+            this.log('Bot ' + oldNickname + ' changes nickname for ' + nickname)
+            // To change nickname, just join again. This will emit a new presence stanza.
+            bot.joinRoom(
+              video.uuid,
+              'room.' + server.domain(),
+              nickname
+            ).then(() => {}, () => {})
+          }
+        }, this.nicknameChangeOptions.delay)
       }
     }
 
