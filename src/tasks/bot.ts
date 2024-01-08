@@ -65,12 +65,14 @@ abstract class BotTask extends Task {
 
     for (let i = 1; i <= this.botNumber; i++) {
       const suffix = this.botNumber > 1 ? '_' + i.toString() : ''
+      const nicknameSuffix = this.botNumber > 1 ? ' ' + i.toString() : ''
       const bot = this.getBot(this.name + suffix)
       this.bots.push(bot)
 
       await bot.connect()
 
-      let nickname = (this.nickname ?? this.name) + suffix
+      let nickname = (this.nickname ?? this.name) + nicknameSuffix
+      this.log('Bot ' + nickname + ' joins the room ' + video.uuid)
       const room = await bot.joinRoom(
         video.uuid,
         'room.' + server.domain(),
@@ -98,7 +100,7 @@ abstract class BotTask extends Task {
         setTimeout(() => {
           if (this.nicknameChangeOptions) {
             const oldNickname = nickname
-            nickname = this.nicknameChangeOptions?.nickname + suffix
+            nickname = this.nicknameChangeOptions?.nickname + nicknameSuffix
             this.log('Bot ' + oldNickname + ' changes nickname for ' + nickname)
             // To change nickname, just join again. This will emit a new presence stanza.
             bot.joinRoom(
