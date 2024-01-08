@@ -39,12 +39,12 @@ class ExternalComponentBotTask extends BotTask {
     }
   }
 
-  protected getBot (): Bot {
+  protected getBot (name: string): Bot {
     const server = Server.singleton()
     if (!this.componentDefinition) {
       throw new Error('Missing component definition')
     }
-    return new Bot(this.name, component({
+    return new Bot(name, component({
       service: 'xmpp://127.0.0.1:' + this.port.toString(),
       domain: this.componentDefinition.name + '.' + server.domain(),
       password: this.componentDefinition.password

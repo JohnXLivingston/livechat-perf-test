@@ -45,6 +45,7 @@ tasks:
     name: websocket_anonymous_bot_1
     duration: 5000
     nickname: bot_02_websocket
+    bot_number: 3 # optionnal. If given (and an integer), it will spawn N bots.
     talk:
       delay: 1000
 

@@ -13,9 +13,10 @@ interface TalkOptions {
  */
 abstract class BotTask extends Task {
   protected readonly duration: number = 10000
-  protected bot: Bot | null = null
+  protected bots: Bot[] = []
   protected readonly nickname: string | null = null
   protected readonly talkOptions: TalkOptions | null = null
+  protected botNumber: number = 1
 
   constructor (suite: TestSuite, definition: any) {
     super(suite, definition)
@@ -34,29 +35,47 @@ abstract class BotTask extends Task {
     if ('talk' in definition) {
       this.talkOptions = definition.talk
     }
+
+    if ('bot_number' in definition) {
+      this.botNumber = parseInt(definition.bot_number)
+    } else {
+      this.botNumber = 1
+    }
+
+    if (isNaN(this.botNumber) || this.botNumber < 1) {
+      throw new Error('Invalid multiple parameter')
+    }
   }
 
-  protected abstract getBot (): Bot
+  protected abstract getBot (name: string): Bot
 
   public async start (): Promise<void> {
     const server = Server.singleton()
     const video = Video.singleton()
 
-    this.bot = this.getBot()
+    for (let i = 1; i <= this.botNumber; i++) {
+      const suffix = this.botNumber > 1 ? '_' + i.toString() : ''
+      const bot = this.getBot(this.name + suffix)
+      this.bots.push(bot)
 
-    await this.bot.connect()
-    const room = await this.bot.joinRoom(video.uuid, 'room.' + server.domain(), this.nickname ?? this.name)
-    const h = new HandlerRandomQuotes(this.name, room, {
-      delay: (this.talkOptions?.delay ?? 1000) / 1000,
-      quotes: [
-        'Bot random quote 1',
-        'Bot random quote 2',
-        'Bot random quote 3',
-        'Bot random quote 4',
-        'Bot random quote 5'
-      ]
-    })
-    await h.start()
+      await bot.connect()
+      const room = await bot.joinRoom(
+        video.uuid,
+        'room.' + server.domain(),
+        (this.nickname ?? this.name) + suffix
+      )
+      const h = new HandlerRandomQuotes(this.name, room, {
+        delay: (this.talkOptions?.delay ?? 1000) / 1000,
+        quotes: [
+          'Bot random quote 1',
+          'Bot random quote 2',
+          'Bot random quote 3',
+          'Bot random quote 4',
+          'Bot random quote 5'
+        ]
+      })
+      await h.start()
+    }
 
     this.waitFor(new Promise((resolve) => {
       setTimeout(() => {
@@ -66,8 +85,12 @@ abstract class BotTask extends Task {
   }
 
   protected async disconnect (): Promise<void> {
-    this.log('Disconnecting the bot...')
-    await this.bot?.disconnect()
+    this.log('Disconnecting the bot(s)...')
+    const promises = []
+    for (const bot of this.bots) {
+      promises.push(bot.disconnect())
+    }
+    await Promise.all(promises)
   }
 }
 

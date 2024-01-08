@@ -8,14 +8,14 @@ import { Bot } from 'xmppjs-chat-bot'
  * Can be used to do some heavy talking.
  */
 class WebsocketAnonymousBotTask extends BotTask {
-  protected getBot (): Bot {
+  protected getBot (name: string): Bot {
     const server = Server.singleton()
 
     // service: something like 'wss://video.instance.tld/plugins/livechat/ws/xmpp-websocket'
     const service = server.webSocketUrl()
     const domain = 'anon.' + server.domain()
 
-    return new Bot(this.name, client({
+    return new Bot(name, client({
       service,
       domain
     }))
