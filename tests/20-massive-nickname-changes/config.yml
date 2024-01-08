@@ -5,7 +5,7 @@ tasks:
 
   - type: chromium
     name: browser_01
-    duration: 60000
+    duration: 80000
     headless: true
     login: user_01
     trace: false
@@ -15,10 +15,10 @@ tasks:
 
   - type: monitor_server
     name: monitor_server
-    duration: 60000
+    duration: 80000
   - type: monitor_chromium
     name: monitor_chromium
-    duration: 60000
+    duration: 80000
 
   - type: wait
     duration: 5000
@@ -28,9 +28,10 @@ tasks:
   # then change nickname after a little delay (so we can see impact on the chromium CPU usage)
   - type: websocket_anonymous_bot
     name: websocket_anonymous_bot
-    duration: 40000
+    duration: 60000
     nickname: Anonymous
     bot_number: 100
+    delay_between_bots: 100
     nickname_change:
       nickname: Bot
       delay: 20000 # let some time, to be sure all bots have joined, and the browser handled their connections
@@ -38,7 +39,7 @@ tasks:
   # Let some time to tests...
   - type: wait
     name: waiting_for_tests
-    duration: 60000
+    duration: 80000
 
   - type: delete_current_live # this will delete the current live, only if it was created for the test!
     name: delete_current_live

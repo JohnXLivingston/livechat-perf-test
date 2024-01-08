@@ -24,6 +24,7 @@ abstract class BotTask extends Task {
   protected readonly talkOptions: TalkOptions | null = null
   protected readonly nicknameChangeOptions: NickNameChangeOptions | null = null
   protected botNumber: number = 1
+  protected delayBetweenBots: number = 100
 
   constructor (suite: TestSuite, definition: any) {
     super(suite, definition)
@@ -51,9 +52,15 @@ abstract class BotTask extends Task {
     } else {
       this.botNumber = 1
     }
-
     if (isNaN(this.botNumber) || this.botNumber < 1) {
       throw new Error('Invalid multiple parameter')
+    }
+
+    if ('delay_between_bots' in definition) {
+      this.delayBetweenBots = parseInt(definition.delay_between_bots)
+    }
+    if (isNaN(this.delayBetweenBots) || this.delayBetweenBots < 1) {
+      throw new Error('Invalid delay_between_bots parameter')
     }
   }
 
@@ -71,6 +78,12 @@ abstract class BotTask extends Task {
       bot.connect().then(async () => {
         await this.runBot(bot, i, server, video)
       }, () => {})
+
+      if (this.delayBetweenBots) {
+        await new Promise(resolve => {
+          setTimeout(resolve, this.delayBetweenBots)
+        })
+      }
     }
 
     this.waitFor(new Promise((resolve) => {

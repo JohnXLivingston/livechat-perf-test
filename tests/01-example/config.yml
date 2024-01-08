@@ -47,6 +47,7 @@ tasks:
     duration: 5000
     nickname: bot_02_websocket
     bot_number: 3 # optionnal. If given (and an integer), it will spawn N bots.
+    delay_between_bots: 100 # optionnal. A delay to wait between 2 bot spawning, to avoid opening all connection at the same time.
     talk:
       delay: 1000
       wait: 3000 # optional, time to wait before talking
