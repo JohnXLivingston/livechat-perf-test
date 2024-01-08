@@ -142,7 +142,14 @@ abstract class BotTask extends Task {
     this.log('Disconnecting the bot(s)...')
     const promises = []
     for (const bot of this.bots) {
+      this.log('Disconnecting bot ' + bot.botName)
       promises.push(bot.disconnect())
+      if (this.delayBetweenBots) {
+        // Also waiting for disconnection.
+        await new Promise(resolve => {
+          setTimeout(resolve, this.delayBetweenBots)
+        })
+      }
     }
     await Promise.all(promises)
   }

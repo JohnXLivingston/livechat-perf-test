@@ -23,7 +23,7 @@ This test suite will do:
 * wait a little
 * join the chat with 100 anonymous bots (nickname "Anonymous 1", and so on), at a rate of ~10 bots per second
 * after 20 seconds, each bot will change his nickname (for "bot 1", and so on)
-* each bot will leave after 60 seconds
+* after 50 seconds, bots will leave
 * finally we close the chromium, and delete the live
 
 So we should observe some high CPU usage on Chromium, and on the server, at 3 key moments:
