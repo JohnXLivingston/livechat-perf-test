@@ -388,7 +388,7 @@ Trying an implementation of [#138](https://github.com/JohnXLivingston/peertube-p
 
 Results: [results files](./results/02/).
 
-Plugin version: v8.0.4 + some improvments + commit ...
+Plugin version: v8.0.4 + some minor changes (not related) + commit [ee48b01ae720e01b4ff628975697b7b3d11cc93e](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/ee48b01ae720e01b4ff628975697b7b3d11cc93e).
 
 ```bash
 npm run start -- run --test '20-massive-nickname-changes' -s server1 --comments 'Runned on server1.' --run-name '02'
