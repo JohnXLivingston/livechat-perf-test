@@ -144,3 +144,30 @@ There is no more bottleneck concerning:
 * massive joins
 * massive anonymous user nick changes
 * massive leaves
+
+## 05
+
+This run evaluates the proposed fix for [#136](https://github.com/JohnXLivingston/peertube-plugin-livechat/issues/136): display anonymous users at the end of the list.
+Two goals:
+
+* check that there is no new performance issue with [commit 873067d2a292b9a9808a2cda7c927c345396ee2b](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/873067d2a292b9a9808a2cda7c927c345396ee2b)
+* check if this is enough to close [#138](https://github.com/JohnXLivingston/peertube-plugin-livechat/issues/138).
+
+Results: [results files](./results/05/).
+
+Plugin version: commit [873067d2a292b9a9808a2cda7c927c345396ee2b](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/873067d2a292b9a9808a2cda7c927c345396ee2b).
+
+See [Run output](./05.output.md).
+
+Chromium CPU usage:
+
+![Chromium CPU](./results/05/monitor_chromium.png)
+
+### 05 Conclusion
+
+|Run 04|Run 05|
+|--|--|
+|![Chromium CPU](./results/04/monitor_chromium.png) | ![Chromium CPU](./results/05/monitor_chromium.png) |
+
+No significant change with Run 04.
+Everything works fine.
