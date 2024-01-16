@@ -122,3 +122,25 @@ Comparing Chromium CPU usage:
 This patch clearly reduce the browser CPU usage.
 Will have to see with ConverseJS if there are ok to merge this upstream.
 If not, we will have to find a way to patch ConverseJS in the building process.
+
+## 04
+
+This run is just to confirm previous results, using actual livechat plugin code.
+
+Results: [results files](./results/04/).
+
+Plugin version: commit [21efc8552342732b49ee3473a8690ce7d4c99f14](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/21efc8552342732b49ee3473a8690ce7d4c99f14).
+
+See [Run output](./04.output.md).
+
+Chromium CPU usage:
+
+![Chromium CPU](./results/04/monitor_chromium.png)
+
+### 04 Conclusion
+
+There is no more bottleneck concerning:
+
+* massive joins
+* massive anonymous user nick changes
+* massive leaves
