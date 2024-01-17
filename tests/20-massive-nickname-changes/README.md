@@ -171,3 +171,29 @@ Chromium CPU usage:
 
 No significant change with Run 04.
 Everything works fine.
+
+## 06
+
+After discussing with JCBrand, there was a bug in ConverseJS. The MUC particpant list was not sorted on nicknames and roles changes.
+So I made a [PR](https://github.com/conversejs/converse.js/pull/3304) to fix this, and removed the code in the livechat plugin that was sorting manually.
+
+This run is to check there is no new performance issue after this modification.
+
+Results: [results files](./results/06/).
+
+Plugin version: commit [ee9c5f523c7cd038441fa4eb889890d86df74b93](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/ee9c5f523c7cd038441fa4eb889890d86df74b93).
+
+See [Run output](./06.output.md).
+
+Chromium CPU usage:
+
+![Chromium CPU](./results/06/monitor_chromium.png)
+
+### 05 Conclusion
+
+|Run04|Run 05|Run 06|
+|--|--|--|
+|![Chromium CPU](./results/04/monitor_chromium.png) |![Chromium CPU](./results/05/monitor_chromium.png) | ![Chromium CPU](./results/06/monitor_chromium.png) |
+
+No significant change with previous runs (notice the vertical scale that is not the same for run 05).
+Everything works fine.
