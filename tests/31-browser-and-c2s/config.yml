@@ -13,72 +13,72 @@ tasks:
   - type: wait
     duration: 5000
 
-  # - type: c2s_anonymous_bot
-  #   name: c2s_anonymous_bot
-  #   duration: 25000
-  #   nickname: AnonymousC2S_1
-  #   bot_number: 50
-  #   delay_between_bots: 100
-  #   talk:
-  #     delay: 1000
-  #     wait: 10000
-  #     during: 10000
+  - type: c2s_anonymous_bot
+    name: c2s_anonymous_bot
+    duration: 25000
+    nickname: AnonymousC2S_1
+    bot_number: 50
+    delay_between_bots: 100
+    talk:
+      delay: 1000
+      wait: 10000
+      during: 10000
 
-  # # Let some time to tests...
-  # - type: wait
-  #   name: waiting_for_tests
-  #   duration: 35000
+  # Let some time to tests...
+  - type: wait
+    name: waiting_for_tests
+    duration: 35000
 
   # Joining with browers
   - type: chromium
     name: browser_01
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_02
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_03
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_04
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_05
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_06
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_07
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_08
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_09
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
   - type: chromium
     name: browser_10
     trace: false
-    duration: 25000
+    duration: 45000
     headless: true
 
   - type: wait
