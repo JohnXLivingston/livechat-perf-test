@@ -11,7 +11,7 @@ I have in mind the avatars retrievals (using vCards), that can grow exponentiall
 
 In other words, browsers using ConverseJS will retrieve all incoming users vCards. We will evaluate the additional CPU usage on the server.
 
-# 01
+## 01
 
 Result for running this test suite [on livechat v8.0.4](./results/01/).
 
@@ -22,3 +22,11 @@ See [Run output](./01.output.md).
 Server CPU:
 
 ![ServerCPU](./results/01/monitor_server.png)
+
+### 01 Conclusion
+
+When the bots joins for the second time (at 64s), we can see Prosody uses more CPU than the first time (at 10s).
+Moreover, on the first join the CPU raises linearly, but on the second it raises immediatly.
+
+Seems reasonable to think it could be related to avatar handling.
+Must do more investigation to confirm.
