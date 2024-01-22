@@ -42,6 +42,7 @@ tasks:
     talk:
       delay: 1000
       wait: 100 # optional, time to wait before talking
+      during: 3000 # optional, how long to talk
   - type: websocket_anonymous_bot
     name: websocket_anonymous_bot_1
     duration: 5000
@@ -51,6 +52,7 @@ tasks:
     talk:
       delay: 1000
       wait: 3000 # optional, time to wait before talking
+      during: 3000 # optional, how long to talk
     nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
       nickname: bot_02_websocket_new_nickname
       delay: 2500
@@ -63,6 +65,7 @@ tasks:
     talk:
       delay: 1000
       wait: 3000 # optional, time to wait before talking
+      during: 3000 # optional, how long to talk
     nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
       nickname: bot_03_c2s_new_nickname
       delay: 2500

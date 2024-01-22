@@ -7,6 +7,7 @@ import { Bot, HandlerRandomQuotes } from 'xmppjs-chat-bot'
 interface TalkOptions {
   delay: number
   wait?: number
+  during?: number
 }
 
 interface NickNameChangeOptions {
@@ -118,6 +119,14 @@ abstract class BotTask extends Task {
           ]
         })
         h.start()
+
+        if (this.talkOptions?.during) {
+          setTimeout(() => {
+            this.log('Bot ' + nickname + ' stops talking')
+            h.stop()
+          },
+          this.talkOptions.during)
+        }
       }, this.talkOptions.wait ?? 0)
     }
 
