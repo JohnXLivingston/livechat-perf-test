@@ -35,5 +35,17 @@ Server CPU:
 We can observe:
 
 * little CPU usage when Websocket bots are joining (at 10s)
-* ~75% CPU when Websocket bots are talking (between 20s and 45s)
-* no particuliar CPU usage when bot are leaving ()
+* ~60% CPU when Websocket bots are talking (between 20s and 35s)
+* little CPU usage when Websocket bots are leaving (at 40s)
+* little CPU usage when Websocket bots are joining (at 50s)
+* ~60% CPU when Websocket bots are talking (between 60s and 75s)
+* little CPU usage when Websocket bots are leaving (at 80s)
+
+Contrary to what I expected, there is no difference between C2S and Websocket.
+So **Websocket processing does not explain Prosody CPU load**.
+The bottleneck must be somewhere else.
+
+Note: here the bots are only connecting and talking. They did not retrieve avatars using vCards, neither does any additionnal stuff that ConverseJS does.
+So we must evaluate, in a separate test, if the Prosody load changes when there are some browser involved in the process.
+
+There is also some load on the Peertube process when using Websocket (this was expected, but could probably be optimized).
