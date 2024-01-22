@@ -9,6 +9,7 @@ import { CreateLiveTask } from './create-live'
 import { DeleteCurrentLive } from './delete-current-live'
 import { ExternalComponentBotTask } from './bot/external-component-bot'
 import { WebsocketAnonymousBotTask } from './bot/websocket-anonymous-bot'
+import { C2SAnonymousBotTask } from './bot/c2s-anonymous-bot'
 
 /**
  * Task factory: creates the Task object from the configuration.
@@ -38,6 +39,8 @@ function initTask (suite: TestSuite, definition: any): Task {
       return new DeleteCurrentLive(suite, definition)
     case 'websocket_anonymous_bot':
       return new WebsocketAnonymousBotTask(suite, definition)
+    case 'c2s_anonymous_bot':
+      return new C2SAnonymousBotTask(suite, definition)
     case 'external_component_bot':
       return new ExternalComponentBotTask(suite, definition)
     default: throw new Error('Unknown task ' + type)

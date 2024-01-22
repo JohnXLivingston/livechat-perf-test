@@ -57,6 +57,11 @@ servers:
       # Some tests need an already existing chat room.
       - key: video_01
         uuid: 'c5d20adf-1088-4d40-bbfc-1abb42d20b05'
+    xmpp_c2s:
+      # Some tests will connect using direct client-2-server connections.
+      # To this to work, you must enable it in the plugin settings.
+      port: 52822 # the C2S port
+      ssh_tunneling: true # by default, the plugin only listin on localhost interfaces. By setting this to true, a ssh tunnel will be opened.
     xmpp_external_components:
       # Some tests will connect to the server using XMPP External Component.
       # To use this, you must setup their access in the livechat plugin settings

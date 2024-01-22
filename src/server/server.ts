@@ -20,6 +20,10 @@ interface ServerOptions {
     key: string
     uuid: string
   }>
+  xmpp_c2s?: {
+    port: number
+    ssh_tunneling?: boolean
+  }
   xmpp_external_components?: {
     port: number
     components: ExternalComponent[]
@@ -128,6 +132,23 @@ class Server {
    */
   public getExternalComponent (key: string): ExternalComponent | undefined {
     return this.options.xmpp_external_components?.components?.find(c => key === c.key)
+  }
+
+  /**
+   * Get the C2S port informations (port number, and if ssh tunneling is needed).
+   */
+  public getC2SPortInfos (): {
+    port: number
+    ssh_tunneling: boolean
+  } {
+    if (!this.options?.xmpp_c2s?.port) {
+      throw new Error('No port configured for C2S.')
+    }
+
+    return {
+      port: this.options.xmpp_c2s.port,
+      ssh_tunneling: this.options.xmpp_c2s.ssh_tunneling === true
+    }
   }
 
   /**

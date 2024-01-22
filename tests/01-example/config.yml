@@ -54,6 +54,18 @@ tasks:
     nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
       nickname: bot_02_websocket_new_nickname
       delay: 2500
+  - type: c2s_anonymous_bot
+    name: c2s_anonymous_bot_1
+    duraction: 5000
+    nickname: bot_03_c2s
+    bot_number: 3 # optionnal. If given (and an integer), it will spawn N bots.
+    delay_between_bots: 100 # optionnal. A delay to wait between 2 bot spawning, to avoid opening all connection at the same time.
+    talk:
+      delay: 1000
+      wait: 3000 # optional, time to wait before talking
+    nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
+      nickname: bot_03_c2s_new_nickname
+      delay: 2500
 
   # Let some time to tests...
   - type: wait
