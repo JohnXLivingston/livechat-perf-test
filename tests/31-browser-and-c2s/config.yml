@@ -8,7 +8,7 @@ tasks:
 
   - type: monitor_server
     name: monitor_server
-    duration: 90000
+    duration: 130000
 
   - type: wait
     duration: 5000
@@ -33,52 +33,52 @@ tasks:
   - type: chromium
     name: browser_01
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_02
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_03
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_04
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_05
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_06
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_07
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_08
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_09
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
   - type: chromium
     name: browser_10
     trace: false
-    duration: 45000
+    duration: 55000
     headless: true
 
   - type: wait
@@ -99,7 +99,7 @@ tasks:
   # Let some time to tests...
   - type: wait
     name: waiting_for_tests
-    duration: 35000
+    duration: 45000
 
   - type: delete_current_live # this will delete the current live, only if it was created for the test!
     name: delete_current_live
