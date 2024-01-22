@@ -20,21 +20,23 @@ function log (s: string, port?: number): void {
 
 async function openTunnel (port: number): Promise<void> {
   let sshTunnel = sshTunnels.get(port)
-  if (sshTunnel) {
+  if (sshTunnel && sshTunnel.count > 0) {
     sshTunnel.log('SSH Tunnel already openned.')
     sshTunnel.count++
     return
   }
 
-  sshTunnel = {
-    port,
-    tunnelProcess: null,
-    count: 0,
-    log: (s: string) => {
-      log(s, port)
+  if (!sshTunnel) {
+    sshTunnel = {
+      port,
+      tunnelProcess: null,
+      count: 0,
+      log: (s: string) => {
+        log(s, port)
+      }
     }
+    sshTunnels.set(port, sshTunnel)
   }
-  sshTunnels.set(port, sshTunnel)
 
   sshTunnel.log('Openning SSH Tunnel for port forwarding.')
   const sshCommand = Server.singleton().getSSHCommand('-L ' + port.toString() + ':localhost:' + port.toString())
