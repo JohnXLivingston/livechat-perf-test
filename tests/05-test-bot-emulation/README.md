@@ -27,3 +27,5 @@ As we can see, we have very similar results.
 Please notice the linear growth of the Prosody CPU usage.
 
 So we can validate the emulation process: we have results very similar between the bots and ConverseJS.
+
+Note: for now, the emulation does not handle ping requests. To be complete, we should also emulate this.
