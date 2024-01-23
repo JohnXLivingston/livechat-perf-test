@@ -47,7 +47,7 @@
     "md5": "^2.3.0",
     "puppeteer": "^21.6.0",
     "sharp": "^0.33.0",
-    "xmppjs-chat-bot": "^0.2.8",
+    "xmppjs-chat-bot": "^0.3.0",
     "yaml": "^2.3.4"
   }
 }

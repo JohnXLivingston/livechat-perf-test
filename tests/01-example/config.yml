@@ -43,6 +43,11 @@ tasks:
       delay: 1000
       wait: 100 # optional, time to wait before talking
       during: 3000 # optional, how long to talk
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: true # get vcards
+      carbons: true # activate carbon
   - type: websocket_anonymous_bot
     name: websocket_anonymous_bot_1
     duration: 5000
@@ -56,6 +61,11 @@ tasks:
     nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
       nickname: bot_02_websocket_new_nickname
       delay: 2500
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: true # get vcards
+      carbons: true # activate carbon
   - type: c2s_anonymous_bot
     name: c2s_anonymous_bot_1
     duraction: 5000
@@ -69,6 +79,11 @@ tasks:
     nickname_change: # you can tell the bot to change nickname after some delay. This can be used to simulate Anonymous connections, where user first connect as "Anonymous XXX".
       nickname: bot_03_c2s_new_nickname
       delay: 2500
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: true # get vcards
+      carbons: true # activate carbon
 
   # Let some time to tests...
   - type: wait

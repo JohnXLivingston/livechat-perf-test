@@ -13,12 +13,16 @@ class WebsocketAnonymousBotTask extends BotTask {
 
     // service: something like 'wss://video.instance.tld/plugins/livechat/ws/xmpp-websocket'
     const service = server.webSocketUrl()
-    const domain = 'anon.' + server.domain()
+    const domain = this.getVirtualHost()
 
     return new Bot(name, client({
       service,
       domain
     }))
+  }
+
+  protected getVirtualHost (): string {
+    return 'anon.' + Server.singleton().domain()
   }
 }
 

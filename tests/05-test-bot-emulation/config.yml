@@ -1,0 +1,34 @@
+tasks:
+  - type: create_live
+    user: user_01
+    name: create_live
+
+  - type: wait
+    duration: 1000
+
+  - type: monitor_server
+    name: monitor_server
+    duration: 15000
+  - type: wait
+    duration: 1000
+
+  - type: websocket_anonymous_bot
+    name: websocket_anonymous_bot_1
+    duration: 5000
+    nickname: bot_01_websocket
+    bot_number: 4
+    delay_between_bots: 100
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: true # get vcards
+      carbons: true # activate carbon
+
+  # Let some time to tests...
+  - type: wait
+    name: waiting_for_tests
+    duration: 10000
+
+  - type: delete_current_live # this will delete the current live, only if it was created for the test!
+    name: delete_current_live
+    user: user_01 # must provide the user that has created the video

@@ -29,12 +29,16 @@ class C2SAnonymousBotTask extends BotTask {
 
     const host = this.sshTunneling ? '127.0.0.1' : server.domain()
     const service = 'xmpp://' + host + ':' + this.port.toString()
-    const domain = 'anon.' + server.domain()
+    const domain = this.getVirtualHost()
 
     return new Bot(name, client({
       service,
       domain
     }))
+  }
+
+  protected getVirtualHost (): string {
+    return 'anon.' + Server.singleton().domain()
   }
 
   public async start (): Promise<void> {
