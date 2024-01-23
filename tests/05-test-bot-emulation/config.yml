@@ -8,16 +8,164 @@ tasks:
 
   - type: monitor_server
     name: monitor_server
-    duration: 15000
+    duration: 170000
   - type: wait
-    duration: 1000
+    duration: 4000
+
+  # This browser is to check if everything is okay (headless: false)
+  - type: chromium
+    name: main_browser
+    trace: false
+    duration: 160000
+    headless: false
+    nickname: main_browser
+  - type: wait
+    duration: 2000
+
+
+  - type: chromium
+    name: browser_01
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_01
+  - type: chromium
+    name: browser_02
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_02
+  - type: chromium
+    name: browser_02
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_02
+  - type: chromium
+    name: browser_03
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_03
+  - type: chromium
+    name: browser_04
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_04
+  - type: chromium
+    name: browser_05
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_05
+  - type: chromium
+    name: browser_06
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_06
+  - type: chromium
+    name: browser_07
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_07
+  - type: chromium
+    name: browser_08
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_08
+  - type: chromium
+    name: browser_09
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_09
+  - type: chromium
+    name: browser_10
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_10
+  - type: chromium
+    name: browser_01
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_01
+  - type: chromium
+    name: browser_12
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_12
+  - type: chromium
+    name: browser_12
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_12
+  - type: chromium
+    name: browser_13
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_13
+  - type: chromium
+    name: browser_14
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_14
+  - type: chromium
+    name: browser_15
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_15
+  - type: chromium
+    name: browser_16
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_16
+  - type: chromium
+    name: browser_17
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_17
+  - type: chromium
+    name: browser_18
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_18
+  - type: chromium
+    name: browser_19
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_19
+  - type: chromium
+    name: browser_20
+    trace: false
+    duration: 30000
+    headless: true
+    nickname: browser_20
+
+  - type: wait
+    name: waiting_for_tests
+    duration: 40000
 
   - type: websocket_anonymous_bot
     name: websocket_anonymous_bot_1
-    duration: 5000
-    nickname: bot_01_websocket
-    bot_number: 4
-    delay_between_bots: 100
+    duration: 30000
+    nickname: bot_websocket
+    bot_number: 20
+    delay_between_bots: 1000 # chromium takes about 1s to open, so...
     emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
       disco: true # get disco info
       roster: true # get roster
@@ -27,7 +175,7 @@ tasks:
   # Let some time to tests...
   - type: wait
     name: waiting_for_tests
-    duration: 10000
+    duration: 70000
 
   - type: delete_current_live # this will delete the current live, only if it was created for the test!
     name: delete_current_live
