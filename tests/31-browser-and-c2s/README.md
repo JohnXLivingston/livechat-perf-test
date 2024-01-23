@@ -28,5 +28,5 @@ Server CPU:
 When the bots joins for the second time (at 64s), we can see Prosody uses more CPU than the first time (at 10s).
 Moreover, on the first join the CPU raises linearly, but on the second it raises immediatly.
 
-Seems reasonable to think it could be related to avatar handling.
+Seems reasonable to think it could be related to avatar handling (or maybe message history retrieval).
 Must do more investigation to confirm.

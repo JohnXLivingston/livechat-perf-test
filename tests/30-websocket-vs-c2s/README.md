@@ -45,7 +45,7 @@ Contrary to what I expected, there is no difference between C2S and Websocket.
 So **Websocket processing does not explain Prosody CPU load**.
 The bottleneck must be somewhere else.
 
-Note: here the bots are only connecting and talking. They did not retrieve avatars using vCards, neither does any additionnal stuff that ConverseJS does.
+Note: here the bots are only connecting and talking. They did not retrieve avatars using vCards, did not retrieve message history, neither does any additionnal stuff that ConverseJS does.
 So we must evaluate, in a separate test, if the Prosody load changes when there are some browser involved in the process.
 
 There is also some load on the Peertube process when using Websocket (this was expected, but could probably be optimized).
