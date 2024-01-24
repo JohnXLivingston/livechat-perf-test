@@ -48,6 +48,7 @@ tasks:
       roster: true # get roster
       vcards: true # get vcards
       carbons: true # activate carbon
+      mam: true # retrieve last messages
   - type: websocket_anonymous_bot
     name: websocket_anonymous_bot_1
     duration: 5000
@@ -66,6 +67,7 @@ tasks:
       roster: true # get roster
       vcards: true # get vcards
       carbons: true # activate carbon
+      mam: true # retrieve last messages
   - type: c2s_anonymous_bot
     name: c2s_anonymous_bot_1
     duraction: 5000
@@ -84,6 +86,7 @@ tasks:
       roster: true # get roster
       vcards: true # get vcards
       carbons: true # activate carbon
+      mam: true # retrieve last messages
 
   # Let some time to tests...
   - type: wait

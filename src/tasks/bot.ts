@@ -25,6 +25,7 @@ interface EmulateOptions {
   roster: boolean // get roster
   vcards: boolean // get vcards
   carbons: boolean
+  mam: boolean // retrieve history
   // TODO: emulate ping? have to check if it is a converseJS parameter
 }
 
@@ -152,6 +153,10 @@ abstract class BotTask extends Task {
       'room.' + server.domain(),
       nickname
     )
+
+    if (this.emulateOptions?.mam) {
+      await this.sendRetrieveMam(bot, nickname, roomJID, 50)
+    }
 
     if (this.emulateOptions?.vcards) {
       room.on('room_roster_initialized', users => {
@@ -326,6 +331,55 @@ abstract class BotTask extends Task {
         'enable', {
           xmlns: 'urn:xmpp:carbons:2'
         }
+      )
+    )
+  }
+
+  private async sendRetrieveMam (bot: Bot, nickname: string, jid: string, max: number): Promise<void> {
+    this.log(`Bot "${nickname}" will retrieve last ${max} messages`)
+    await bot.sendStanza(
+      'iq',
+      {
+        type: 'set',
+        xmlns: 'jabber:client',
+        id: (xmppid() as string) + ':sendIQ',
+        to: jid
+      },
+      xml(
+        'query',
+        {
+          xmlns: 'urn:xmpp:mam:2',
+          queryid: (xmppid() as string)
+        },
+        xml(
+          'x',
+          {
+            xmlns: 'jabber:x:data',
+            type: 'submit'
+          },
+          xml(
+            'field',
+            {
+              var: 'FORM_TYPE',
+              type: 'hidden'
+            },
+            xml(
+              'value', {}, 'urn:xmpp:mam:2'
+            )
+          )
+        ),
+        xml(
+          'set',
+          {
+            xmlns: 'http://jabber.org/protocol/rsm'
+          },
+          xml(
+            'max',
+            {},
+            '50'
+          ),
+          xml('before')
+        )
       )
     )
   }

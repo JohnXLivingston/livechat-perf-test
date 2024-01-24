@@ -171,6 +171,7 @@ tasks:
       roster: true # get roster
       vcards: true # get vcards
       carbons: true # activate carbon
+      mam: true # message archives
 
   # Let some time to tests...
   - type: wait
