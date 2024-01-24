@@ -1,0 +1,95 @@
+tasks:
+  - type: create_live
+    user: user_01
+    name: create_live
+
+  - type: wait
+    duration: 1000
+  - type: monitor_server
+    name: monitor_server
+    duration: 300000
+
+  # # This browser is to check if everything is okay (headless: false)
+  # - type: chromium
+  #   name: main_browser
+  #   trace: false
+  #   duration: 300000
+  #   headless: false
+  #   nickname: main_browser
+  # generating some messages, to test MAM later on
+  - type: websocket_anonymous_bot
+    name: wab_init
+    duration: 10000
+    nickname: wab_init
+    bot_number: 2
+    delay_between_bots: 100
+    talk:
+      delay: 100
+      during: 6000
+
+  - type: wait
+    duration: 15000
+
+  - type: websocket_anonymous_bot
+    name: wab_batch1
+    duration: 60000
+    nickname: wab_batch1
+    bot_number: 100
+    delay_between_bots: 100
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: true # get vcards
+      carbons: true # activate carbon
+      mam: true # message archives
+    talk:
+      delay: 5000
+      wait: 25000
+      during: 20000
+
+  - type: wait
+    duration: 80000
+
+  - type: websocket_anonymous_bot
+    name: wab_batch2
+    duration: 60000
+    nickname: wab_batch2
+    bot_number: 100
+    delay_between_bots: 100
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: false # get vcards
+      carbons: true # activate carbon
+      mam: true # message archives
+    talk:
+      delay: 5000
+      wait: 25000
+      during: 20000
+
+  - type: wait
+    duration: 80000
+
+  - type: websocket_anonymous_bot
+    name: wab_batch3
+    duration: 60000
+    nickname: wab_batch3
+    bot_number: 100
+    delay_between_bots: 100
+    emulate: # a list of behaviour to emulate (for example to emulate ConverseJS that gets vcards and message history)
+      disco: true # get disco info
+      roster: true # get roster
+      vcards: false # get vcards
+      carbons: true # activate carbon
+      mam: false # message archives
+    talk:
+      delay: 5000
+      wait: 25000
+      during: 20000
+
+  - type: wait
+    duration: 80000
+
+  - type: delete_current_live # this will delete the current live, only if it was created for the test!
+    name: delete_current_live
+    user: user_01 # must provide the user that has created the video

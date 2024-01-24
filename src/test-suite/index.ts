@@ -197,12 +197,12 @@ class TestSuite {
 
       // Also generating one graphe per data set
       for (const name in taskData) {
+        const data: any = {}
+        data[name] = taskData[name]
         await generateCPUChart(
           taskName + ' ' + name,
           this.results.start,
-          {
-            name: taskData[name]
-          },
+          data,
           path.resolve(this.resultsDir, taskName + '_' + name + '.png')
         )
       }
