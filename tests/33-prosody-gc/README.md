@@ -77,6 +77,8 @@ Server CPU:
 
 ## Run 03 conclusion
 
-|Defaults parameters| Threshold=200 speed=150|
+|Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|
 |--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)
+
+Seems that performances are worst with Prosody 0.12.4.
