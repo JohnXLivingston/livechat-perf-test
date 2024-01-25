@@ -6,11 +6,17 @@ import fs from 'fs'
 import path from 'path'
 import { execSync } from 'child_process'
 
+interface ResultData {
+  [taskname: string]: {
+    [dataName: string]: Data[]
+  }
+}
+
 interface TestSuiteResults {
   run: string
   comments?: string
   start: number
-  data: {[taskname: string]: {[dataName: string]: Data[]}}
+  data: ResultData
 }
 
 interface Data {
@@ -66,6 +72,10 @@ class TestSuite {
       const task = initTask(this, taskDefinition)
       this.tasks.push(task)
     }
+
+    this.resultsDir = this.overrideOutputDir
+      ? path.resolve(this.overrideOutputDir, this.runName)
+      : path.resolve(this.suiteDir, 'results', this.runName)
   }
 
   /**
@@ -118,10 +128,10 @@ class TestSuite {
       data: {},
       start: Date.now()
     }
-    this.resultsDir = this.overrideOutputDir
-      ? path.resolve(this.overrideOutputDir, this.runName)
-      : path.resolve(this.suiteDir, 'results', this.runName)
 
+    if (!this.resultsDir) {
+      throw new Error('Missing resultsDir')
+    }
     if (fs.existsSync(this.resultsDir)) {
       throw new Error('Directory already exists, please choose another run name: ' + this.resultsDir)
     }
@@ -228,6 +238,25 @@ class TestSuite {
       this.log('Removing original trace file')
       await fs.promises.rm(path.resolve(this.resultsDir, file))
     }
+  }
+
+  /**
+   * Returns the result data of the current run.
+   * If data are not in the object, they will be read from disk.
+   * This allows to load previous data, for example to compute averages afterward
+   * (see compute-average command).
+   */
+  public async getResultsData (): Promise<ResultData> {
+    if (this.results?.data) {
+      return this.results.data
+    }
+    if (!this.resultsDir) {
+      throw new Error('Missing resultsDir')
+    }
+    const content = await fs.promises.readFile(
+      path.resolve(this.resultsDir, 'data.json')
+    )
+    return JSON.parse(content.toString()).data
   }
 
   /**
