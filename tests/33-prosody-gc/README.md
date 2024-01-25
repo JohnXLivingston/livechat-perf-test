@@ -56,3 +56,8 @@ Server CPU:
 |Defaults parameters| Threshold=200 speed=150|
 |--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/02/monitor_server_prosody_cpu.png)
+
+No difference here.
+
+Currently the livechat plugin is using Lua5.2, i should try to upgrade to Lua5.4.
+MattJ told me that GC performance are way better in this version.
