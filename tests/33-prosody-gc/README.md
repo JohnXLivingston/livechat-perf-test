@@ -61,3 +61,22 @@ No difference here.
 
 Currently the livechat plugin is using Lua5.2, i should try to upgrade to Lua5.4.
 MattJ told me that GC performance are way better in this version.
+
+## Run 03
+
+Result for running this test suite [on livechat v8.0.4](./results/02/).
+
+Plugin version: v8.0.4 + using [Prosody 0.12.4 AppImage](https://github.com/JohnXLivingston/prosody-appimage/releases/tag/v0.12.4-1).
+This version uses Lua5.4.
+
+See [Run output](./03.output.md).
+
+Server CPU:
+
+![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)
+
+## Run 03 conclusion
+
+|Defaults parameters| Threshold=200 speed=150|
+|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)
