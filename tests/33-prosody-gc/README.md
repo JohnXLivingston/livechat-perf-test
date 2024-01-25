@@ -6,6 +6,35 @@ Here we will try some tweaking, to see if it can make a difference.
 
 The test scenario will be the same as [32-prosody-cpu](../32-prosody-cpu/), but we will try different GC tweaking.
 
+Note: for each of the run we will use the `compute-average` to compute some CPU average:
+
+* Prosody CPU load average over the full test period
+* Prosody CPU load average for bot batch 1, 2 and 3
+
+To get the full test period average:
+
+```bash
+npm run start -- compute-average --test '33-prosody-gc' --run-name '01'
+```
+
+To get for a given batch: search the first occurence of `wab_batch1` (or `wab_batch2` or `wab_batch3`) in the `XX.ouput.md` file, and note the time between parenthesis. This is the number of seconds after the test start at which the event occured.
+Then search the last occurence of `wab_batch1`.
+
+Then, compute the average using these values as `--after` and `--before` parameters:
+
+```bash
+npm run start -- compute-average --test '33-prosody-gc' --run-name '01' --after 19.073 --before 99.193
+```
+
+If you don't want to seek the timecode manually, you can do:
+
+```bash
+run=01; i=1; \
+npm run start -- compute-average --test '33-prosody-gc' --run-name $run \
+  --after $(grep wab_batch$i tests/33-prosody-gc/$run.output.md | head -n 1 | cut -d '(' -f 2 | cut -d 's' -f 1) \
+  --before $(grep wab_batch$i tests/33-prosody-gc/$run.output.md | tail -n 1 | cut -d '(' -f 2 | cut -d 's' -f 1)
+```
+
 ## Run 01
 
 Result for running this test suite [on livechat v8.0.4](./results/01/).
@@ -17,6 +46,11 @@ See [Run output](./01.output.md).
 Server CPU:
 
 ![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)
+
+* average Prosody CPU usage: 18.16%
+* average Prosody CPU usage for batch 1: 24.81%
+* average Prosody CPU usage for batch 2: 22.95%
+* average Prosody CPU usage for batch 3: 19.70%
 
 Note: default GC options are:
 
@@ -51,6 +85,11 @@ Server CPU:
 
 ![ProsodyCPU](./results/02/monitor_server_prosody_cpu.png)
 
+* average Prosody CPU usage: 18.52%
+* average Prosody CPU usage for batch 1: 26.75%
+* average Prosody CPU usage for batch 2: 22.33%
+* average Prosody CPU usage for batch 3: 19.50%
+
 ## Run 02 conclusion
 
 |Defaults parameters| Threshold=200 speed=150|
@@ -75,6 +114,11 @@ Server CPU:
 
 ![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)
 
+* average Prosody CPU usage: 25.39%
+* average Prosody CPU usage for batch 1: 37.80%
+* average Prosody CPU usage for batch 2: 30.07%
+* average Prosody CPU usage for batch 3: 26.05%
+
 ## Run 03 conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|
@@ -97,6 +141,11 @@ See [Run output](./03b.output.md).
 Server CPU:
 
 ![ProsodyCPU](./results/03b/monitor_server_prosody_cpu.png)
+
+* average Prosody CPU usage: 23.75%
+* average Prosody CPU usage for batch 1: 31.88%
+* average Prosody CPU usage for batch 2: 29.74%
+* average Prosody CPU usage for batch 3: 26.37%
 
 ## Run 03b conclusion
 
@@ -129,6 +178,11 @@ Server CPU:
 
 ![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)
 
+* average Prosody CPU usage: 17.18%
+* average Prosody CPU usage for batch 1: 23.86%
+* average Prosody CPU usage for batch 2: 21.39%
+* average Prosody CPU usage for batch 3: 18.43%
+
 ## Run 04 conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based| Prosody 0.12.4 + gc tweaking|
@@ -154,6 +208,11 @@ See [Run output](./05.output.md).
 Server CPU:
 
 ![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)
+
+* average Prosody CPU usage: 18.14%
+* average Prosody CPU usage for batch 1: 27.70%
+* average Prosody CPU usage for batch 2: 21.57%
+* average Prosody CPU usage for batch 3: 18.03%
 
 ## Run 05 conclusion
 

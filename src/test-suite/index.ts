@@ -246,9 +246,9 @@ class TestSuite {
    * This allows to load previous data, for example to compute averages afterward
    * (see compute-average command).
    */
-  public async getResultsData (): Promise<ResultData> {
-    if (this.results?.data) {
-      return this.results.data
+  public async getResults (): Promise<TestSuiteResults> {
+    if (this.results) {
+      return this.results
     }
     if (!this.resultsDir) {
       throw new Error('Missing resultsDir')
@@ -256,7 +256,7 @@ class TestSuite {
     const content = await fs.promises.readFile(
       path.resolve(this.resultsDir, 'data.json')
     )
-    return JSON.parse(content.toString()).data
+    return JSON.parse(content.toString())
   }
 
   /**

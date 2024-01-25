@@ -14,8 +14,20 @@ function initComputeAverage (program: Command): void {
     'The name for the run. Will be used as folder name in the output directory. Defaults to current datetime.'
   )
   cmd.option(
+    '--after <after>',
+    'Only computes on values after the given timecode. ' +
+    'This timecode is a number of seconds since the test start (can be fractional).'
+  )
+  cmd.option(
+    '--before <before>',
+    'Only computes on values after the given timecode. ' +
+    'This timecode is a number of seconds since the test start (can be fractional).',
+    parseFloat
+  )
+  cmd.option(
     '--output-dir <outputdir>',
-    'Use this directory for output, instead of the tests suite folder.'
+    'Use this directory for output, instead of the tests suite folder.',
+    parseFloat
   )
   cmd.option(
     '-s, --server <server>',
@@ -37,16 +49,29 @@ function initComputeAverage (program: Command): void {
       comments: options.comments ?? undefined
     })
 
-    const data = await suite.getResultsData()
+    const results = await suite.getResults()
+    const data = results.data
+
+    const after = options.after ? (options.after * 1000 + results.start) : undefined
+    const before = options.before ? (options.before * 1000 + results.start) : undefined
+
     for (const taskName in data) {
       const taskData = data[taskName]
       for (const dataName in taskData) {
         const values = taskData[dataName]
         let t = 0
+        let n = 0
         for (let i = 0; i < values.length; i++) {
+          if (after !== undefined && values[i].timestamp < after) {
+            continue
+          }
+          if (before !== undefined && values[i].timestamp > before) {
+            continue
+          }
           t += values[i].value
+          n++
         }
-        const a = t / values.length
+        const a = t / n
         console.log(`${taskName} / ${dataName}: ${a.toFixed(2)}`)
       }
     }
