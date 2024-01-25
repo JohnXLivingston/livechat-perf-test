@@ -90,7 +90,7 @@ Server CPU:
 * average Prosody CPU usage for batch 2: 22.33%
 * average Prosody CPU usage for batch 3: 19.50%
 
-## Run 02 conclusion
+### Run 02 conclusion
 
 |Defaults parameters| Threshold=200 speed=150|
 |--|--|
@@ -123,7 +123,7 @@ Server CPU:
 * average Prosody CPU usage for batch 2: 30.07%
 * average Prosody CPU usage for batch 3: 26.05%
 
-## Run 03 conclusion
+### Run 03 conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|
 |--|--|
@@ -155,7 +155,7 @@ Server CPU:
 * average Prosody CPU usage for batch 2: 29.74%
 * average Prosody CPU usage for batch 3: 26.37%
 
-## Run 03b conclusion
+### Run 03b conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based, run 03| Prosody 0.12.4, Lua5.4, Debian Bookwork based, run 03b|
 |--|--|--|
@@ -195,7 +195,7 @@ Server CPU:
 * average Prosody CPU usage for batch 2: 21.39%
 * average Prosody CPU usage for batch 3: 18.43%
 
-## Run 04 conclusion
+### Run 04 conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based| Prosody 0.12.4 + gc tweaking|
 |--|--|--|
@@ -230,7 +230,7 @@ Server CPU:
 * average Prosody CPU usage for batch 2: 21.57%
 * average Prosody CPU usage for batch 3: 18.03%
 
-## Run 05 conclusion
+### Run 05 conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|Prosody 0.12.4 + gc tweaking (incremental)| Prosody 0.12.4 + gc tweaking (generational)|
 |--|--|--|--|
@@ -255,6 +255,7 @@ gc = {
 ```
 
 Here we use the new generational GC algorythm, with custom threshold.
+These parameters are the one used for `https://yaxim.org/`, that made some tests (given by MattJ in the Prosody chatting room).
 
 See [Run output](./06.output.md).
 
@@ -267,7 +268,7 @@ Server CPU:
 * average Prosody CPU usage for batch 2: 21.14%
 * average Prosody CPU usage for batch 3: 18.43%
 
-## Run 06 conclusion
+### Run 06 conclusion
 
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based|Prosody 0.12.4 + gc tweaking (generational)| Prosody 0.12.4 + gc tweaking (generational, thresholds)|
 |--|--|--|
@@ -276,3 +277,15 @@ Server CPU:
 |average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 27.70%|average Prosody CPU usage for batch 1: 23.86%|
 |average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 21.57%|average Prosody CPU usage for batch 2: 21.14%|
 |average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 18.03%|average Prosody CPU usage for batch 3: 18.43%|
+
+## Conclusion so far
+
+There are some little differences between runs 01 to 06.
+But nothing significant.
+
+It is possible that the GC is not really called, as the Prosody RAM footprint is around 38Mo at the end of the tests.
+Maybe we should do more agressive tests, that are during longer.
+
+**Important note**: It seems that the defaults GC settings for Prosody 0.12.4+Lua5.4 are not very well optimized.
+If we intend to use this version, we should also tweak the GC, for example for the parameters in run 06.
+But these parameters are not easy to tweak, it really depends of the usage.
