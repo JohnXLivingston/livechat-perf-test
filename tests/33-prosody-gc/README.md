@@ -83,6 +83,29 @@ Server CPU:
 
 Seems that performances are worst with Prosody 0.12.4.
 
+Note: this was unexpected. Running again same tests (see run 03b).
+
+## Run 03b
+
+Result for running this test suite [on livechat v8.0.4](./results/03b/).
+
+Plugin version: v8.0.4 + using [Prosody 0.12.4 AppImage](https://github.com/JohnXLivingston/prosody-appimage/releases/tag/v0.12.4-1).
+This version uses Lua5.4.
+
+See [Run output](./03b.output.md).
+
+Server CPU:
+
+![ProsodyCPU](./results/03b/monitor_server_prosody_cpu.png)
+
+## Run 03b conclusion
+
+|Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based, run 03| Prosody 0.12.4, Lua5.4, Debian Bookwork based, run 03b|
+|--|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03b/monitor_server_prosody_cpu.png)
+
+This confirm run 03 was correct. Can't understand all of run 04 and 05 results (see below).
+
 ## Run 04
 
 Result for running this test suite [on livechat v8.0.4](./results/04/).
@@ -134,6 +157,6 @@ Server CPU:
 
 ## Run 05 conclusion
 
-|Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based| Prosody 0.12.4 + gc tweaking (generational)|
-|--|--|--|
-|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)
+|Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|Prosody 0.12.4 + gc tweaking (incremental)| Prosody 0.12.4 + gc tweaking (generational)|
+|--|--|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)
