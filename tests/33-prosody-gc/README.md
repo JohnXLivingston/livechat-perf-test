@@ -95,6 +95,10 @@ Server CPU:
 |Defaults parameters| Threshold=200 speed=150|
 |--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/02/monitor_server_prosody_cpu.png)
+|average Prosody CPU usage: 18.16%|average Prosody CPU usage: 18.52%|
+|average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 26.75%|
+|average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 22.33%|
+|average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 19.50%|
 
 No difference here.
 
@@ -124,6 +128,10 @@ Server CPU:
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|
 |--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)
+|average Prosody CPU usage: 18.16%|average Prosody CPU usage: 25.39%|
+|average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 37.80%|
+|average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 30.07%|
+|average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 26.05%|
 
 Seems that performances are worst with Prosody 0.12.4.
 
@@ -152,6 +160,10 @@ Server CPU:
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based, run 03| Prosody 0.12.4, Lua5.4, Debian Bookwork based, run 03b|
 |--|--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03b/monitor_server_prosody_cpu.png)
+|average Prosody CPU usage: 18.16%|average Prosody CPU usage: 25.39%|average Prosody CPU usage: 23.75%|
+|average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 37.80%|average Prosody CPU usage for batch 1: 31.88%|
+|average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 30.07%|average Prosody CPU usage for batch 2: 29.74%|
+|average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 26.05%|average Prosody CPU usage for batch 3: 26.37%|
 
 This confirm run 03 was correct. Can't understand all of run 04 and 05 results (see below).
 
@@ -188,6 +200,10 @@ Server CPU:
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based| Prosody 0.12.4 + gc tweaking|
 |--|--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)
+|average Prosody CPU usage: 18.16%|average Prosody CPU usage: 25.39%|average Prosody CPU usage: 17.18%
+|average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 37.80%|average Prosody CPU usage for batch 1: 23.86%
+|average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 30.07%|average Prosody CPU usage for batch 2: 21.39%
+|average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 26.05%|average Prosody CPU usage for batch 3: 18.43%
 
 ## Run 05
 
@@ -219,3 +235,7 @@ Server CPU:
 |Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based|Prosody 0.12.4 + gc tweaking (incremental)| Prosody 0.12.4 + gc tweaking (generational)|
 |--|--|--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)
+|average Prosody CPU usage: 18.16%|average Prosody CPU usage: 25.39%|average Prosody CPU usage: 17.18%|average Prosody CPU usage: 18.14%|
+|average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 37.80%|average Prosody CPU usage for batch 1: 23.86%|average Prosody CPU usage for batch 1: 27.70%|
+|average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 30.07%|average Prosody CPU usage for batch 2: 21.39%|average Prosody CPU usage for batch 2: 21.57%|
+|average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 26.05%|average Prosody CPU usage for batch 3: 18.43%|average Prosody CPU usage for batch 3: 18.03%|
