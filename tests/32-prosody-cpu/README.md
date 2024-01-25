@@ -77,6 +77,8 @@ With such complexity, i think there is no point to try to optimize Prosody code.
 It will always reach some limit (if it is not with 100 users, it will be with 1000).
 IMHO, the good way to fix this is by implement some lazy-loading and/or bypass the vcards to retrieve avatars with custom code (See [issue #106](https://github.com/JohnXLivingston/peertube-plugin-livechat/issues/106)).
 
+2024-01-25 update: MattJ and Zash (Prosody maintainers) give me another idea: [hiding participant list](https://github.com/JohnXLivingston/peertube-plugin-livechat/issues/301). This is like Twitch: when you are not moderator, you can't see all other connected users.
+
 ##### Message Archive Management
 
 Comparing T4 and T7 (with and without [Message Archive Management](https://xmpp.org/extensions/xep-0313.html)), we can see that ~15% of CPU seems to be dedicated to MAM (sending last messages to users that are joining).
