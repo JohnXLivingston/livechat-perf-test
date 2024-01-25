@@ -64,7 +64,7 @@ MattJ told me that GC performance are way better in this version.
 
 ## Run 03
 
-Result for running this test suite [on livechat v8.0.4](./results/02/).
+Result for running this test suite [on livechat v8.0.4](./results/03/).
 
 Plugin version: v8.0.4 + using [Prosody 0.12.4 AppImage](https://github.com/JohnXLivingston/prosody-appimage/releases/tag/v0.12.4-1).
 This version uses Lua5.4.
@@ -82,3 +82,58 @@ Server CPU:
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)
 
 Seems that performances are worst with Prosody 0.12.4.
+
+## Run 04
+
+Result for running this test suite [on livechat v8.0.4](./results/04/).
+
+Plugin version: v8.0.4 + using [Prosody 0.12.4 AppImage](https://github.com/JohnXLivingston/prosody-appimage/releases/tag/v0.12.4-1) + following GC tweak in the prosody.cfg.lua file:
+
+```lua
+gc = {
+  mode = "incremental";
+  threshold = 200;
+  speed = 150;
+};
+```
+
+Here we changed threshold and speed, to see if there is any difference.
+If so, we will need to tweak them one by one, to make any conclusion.
+
+See [Run output](./04.output.md).
+
+Server CPU:
+
+![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)
+
+## Run 04 conclusion
+
+|Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based| Prosody 0.12.4 + gc tweaking|
+|--|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)
+
+## Run 05
+
+Result for running this test suite [on livechat v8.0.4](./results/05/).
+
+Plugin version: v8.0.4 + using [Prosody 0.12.4 AppImage](https://github.com/JohnXLivingston/prosody-appimage/releases/tag/v0.12.4-1) + following GC tweak in the prosody.cfg.lua file:
+
+```lua
+gc = {
+  mode = "generational";
+};
+```
+
+Here we use the new generational GC algorythm.
+
+See [Run output](./05.output.md).
+
+Server CPU:
+
+![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)
+
+## Run 05 conclusion
+
+|Prosody 0.12.3, Lua5.2, Debian Bullseye based| Prosody 0.12.4, Lua5.4, Debian Bookwork based| Prosody 0.12.4 + gc tweaking (generational)|
+|--|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)
