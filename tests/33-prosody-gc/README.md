@@ -239,3 +239,40 @@ Server CPU:
 |average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 37.80%|average Prosody CPU usage for batch 1: 23.86%|average Prosody CPU usage for batch 1: 27.70%|
 |average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 30.07%|average Prosody CPU usage for batch 2: 21.39%|average Prosody CPU usage for batch 2: 21.57%|
 |average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 26.05%|average Prosody CPU usage for batch 3: 18.43%|average Prosody CPU usage for batch 3: 18.03%|
+
+## Run 06
+
+Result for running this test suite [on livechat v8.0.4](./results/06/).
+
+Plugin version: v8.0.4 + using [Prosody 0.12.4 AppImage](https://github.com/JohnXLivingston/prosody-appimage/releases/tag/v0.12.4-1) + following GC tweak in the prosody.cfg.lua file:
+
+```lua
+gc = {
+  mode = "generational";
+  minor_threshold = 5;
+  major_threshold = 50;
+};
+```
+
+Here we use the new generational GC algorythm, with custom threshold.
+
+See [Run output](./06.output.md).
+
+Server CPU:
+
+![ProsodyCPU](./results/06/monitor_server_prosody_cpu.png)
+
+* average Prosody CPU usage: 17.11%
+* average Prosody CPU usage for batch 1: 23.86%
+* average Prosody CPU usage for batch 2: 21.14%
+* average Prosody CPU usage for batch 3: 18.43%
+
+## Run 06 conclusion
+
+|Prosody 0.12.3, Lua5.2, Debian Bullseye based|Prosody 0.12.4 + gc tweaking (generational)| Prosody 0.12.4 + gc tweaking (generational, thresholds)|
+|--|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/05/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/06/monitor_server_prosody_cpu.png)|
+|average Prosody CPU usage: 18.16%|average Prosody CPU usage: 18.14%|average Prosody CPU usage: 17.11%|
+|average Prosody CPU usage for batch 1: 24.81%|average Prosody CPU usage for batch 1: 27.70%|average Prosody CPU usage for batch 1: 23.86%|
+|average Prosody CPU usage for batch 2: 22.95%|average Prosody CPU usage for batch 2: 21.57%|average Prosody CPU usage for batch 2: 21.14%|
+|average Prosody CPU usage for batch 3: 19.70%|average Prosody CPU usage for batch 3: 18.03%|average Prosody CPU usage for batch 3: 18.43%|
