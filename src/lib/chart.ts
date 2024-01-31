@@ -1,10 +1,11 @@
-import type { Data } from '../test-suite'
+import type { Data, Mark } from '../test-suite'
 import { spawn } from 'child_process'
 
 async function generateCPUChart (
   title: string,
   start: number,
   data: { [name: string]: Data[] },
+  marks: Mark[] | undefined | null,
   outputPath: string
 ): Promise<void> {
   const gnuplot = spawn(
@@ -32,6 +33,23 @@ async function generateCPUChart (
     'set ylabel "%CPU"\n' +
     'set xlabel "Seconds"\n'
   )
+
+  // Showing marks.
+  // This must be done before ploting, else it won't show.
+  if (marks) {
+    for (const mark of marks) {
+      if (!mark.chartKey) { continue }
+      // Substracting `start` to get the time since the start of the test suite.
+      // Must divide the timestamp by 1000 to get a unix timestamp.
+      const timestamp = (mark.timestamp - start) / 1000
+      gnuplot.stdin.write(
+        `set arrow from ${timestamp.toString()},0 to ${timestamp.toString()},100 nohead lc rgb 'red'\n`
+      )
+      gnuplot.stdin.write(
+        `set label '${mark.chartKey}' at ${timestamp.toString()},100 right\n`
+      )
+    }
+  }
 
   // Asking to plot N lines:
   gnuplot.stdin.write(

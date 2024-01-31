@@ -20,6 +20,11 @@ tasks:
   - type: wait
     name: wait_two_second
     duration: 2000
+
+  - type: log
+    text: a text to log
+    chart_key: T1 # optional key, to display as label in charts. If not given, won't be in charts at all.
+
   - type: chromium
     name: main_browser
     trace: true

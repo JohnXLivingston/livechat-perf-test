@@ -12,11 +12,19 @@ interface ResultData {
   }
 }
 
+interface Mark {
+  task: string
+  timestamp: number
+  text: string
+  chartKey?: string
+}
+
 interface TestSuiteResults {
   run: string
   comments?: string
   start: number
   data: ResultData
+  marks: Mark[]
 }
 
 interface Data {
@@ -126,6 +134,7 @@ class TestSuite {
       run: this.runName,
       comments: this.comments,
       data: {},
+      marks: [],
       start: Date.now()
     }
 
@@ -187,6 +196,25 @@ class TestSuite {
   }
 
   /**
+   * Add informations in results.marks, with the current timecode.
+   * Can be used to keep track of some specific moments in the test run.
+   * @param task the task
+   * @param text the text to log
+   * @param chartKey if given, there will be a mark in charts, with that key as label.
+   */
+  public addMark (task: Task, text: string, chartKey?: string): void {
+    if (!this.results) {
+      throw new Error('Calling addMark too soon, no results for now.')
+    }
+    this.results.marks.push({
+      task: task.name,
+      text: text,
+      chartKey: chartKey,
+      timestamp: Date.now()
+    })
+  }
+
+  /**
    * Generates charts using the results.
    */
   protected async generateCharts (): Promise<void> {
@@ -202,6 +230,7 @@ class TestSuite {
         taskName,
         this.results.start,
         taskData,
+        this.results.marks,
         path.resolve(this.resultsDir, taskName + '.png')
       )
 
@@ -213,6 +242,7 @@ class TestSuite {
           taskName + ' ' + name,
           this.results.start,
           data,
+          this.results.marks,
           path.resolve(this.resultsDir, taskName + '_' + name + '.png')
         )
       }
@@ -288,5 +318,6 @@ class TestSuite {
 
 export {
   TestSuite,
-  Data
+  Data,
+  Mark
 }
