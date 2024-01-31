@@ -31,7 +31,8 @@ async function generateCPUChart (
     'set output "' + outputPath + '"\n' +
     'set title "%CPU ' + title.replace(/_/g, ' ') + '"\n' +
     'set ylabel "%CPU"\n' +
-    'set xlabel "Seconds"\n'
+    'set xlabel "Seconds"\n' +
+    'set yrange [0:100<*]\n'
   )
 
   // Showing marks.
