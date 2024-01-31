@@ -63,17 +63,17 @@ There is another modification on the livechat plugin: I added a special `force_d
 
 First, we will connect 200 anonymous bots. These bots won't load any avatar, neither emulate any ConverseJS behaviour. They are just here to have some avatars to load in further tests.
 
-5 additionnal bots, who are talking. 1 message every 5 second. These bots will be connected at the rate of 1 per second, so we will have 1 new avatar to load every second.
-
 Waiting a few seconds, so everything is in place.
 
 Only then, we will start monitoring Prosody CPU.
+We will also monitor Chrome CPU, to see the difference.
 
-Now, two batches of 10 browser will joins.
+Then, we will connect 2 chrome browsers (one at a time), to have accurate Chrome CPU usage measures.
+One with the user list visible, the other not.
+
+After that, two batches of 10 browser will joins.
 The first batch will be with the user list visible, the second without.
 
 Note: 5 browsers will be using Peertube accounts, 5 will be anonymous.
 
 What we expect: see a Prosody load difference between the 2 batches.
-
-We will also monitor Chrome CPU, to see the difference.

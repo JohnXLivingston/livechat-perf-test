@@ -4,18 +4,7 @@ tasks:
     name: create_live
 
   - type: wait
-    duration: 1000
-
-  - type: websocket_anonymous_bot
-    name: wab_talking
-    duration: 240000
-    bot_number: 5
-    delay_between_bots: 1000
-    talk:
-      delay: 1000
-      during: 230000
-  - type: wait
-    duration: 5100
+    duration: 2000
 
   - type: websocket_anonymous_bot
     name: wab_viewers
@@ -35,6 +24,29 @@ tasks:
   - type: wait
     duration: 7000
 
+  - type: log
+    chart_key: T1
+  - type: chromium
+    name: browser0a
+    duration: 3000
+    headless: false
+
+  - type: wait
+    duration: 4000
+  - type: log
+    chart_key: T2
+  - type: chromium
+    name: browser0a
+    duration: 3000
+    headless: false
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+
+  - type: wait
+    duration: 4000
+
+  - type: log
+    chart_key: T3
   - type: chromium
     name: browser1
     duration: 30000
@@ -84,6 +96,8 @@ tasks:
   - type: wait
     duration: 60000
 
+  - type: log
+    chart_key: T4
   - type: chromium
     name: browser11
     duration: 30000
