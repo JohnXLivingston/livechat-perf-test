@@ -47,7 +47,7 @@ async function generateCPUChart (
         `set arrow from ${timestamp.toString()},0 to ${timestamp.toString()},100 nohead lc rgb 'red'\n`
       )
       gnuplot.stdin.write(
-        `set label '${mark.chartKey}' at ${timestamp.toString()},100 right\n`
+        `set label '${mark.chartKey}' at ${timestamp.toString()},95 right\n`
       )
     }
   }
