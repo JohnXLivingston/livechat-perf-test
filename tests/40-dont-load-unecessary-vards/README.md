@@ -77,3 +77,50 @@ The first batch will be with the user list visible, the second without.
 Note: 5 browsers will be using Peertube accounts, 5 will be anonymous.
 
 What we expect: see a Prosody load difference between the 2 batches.
+
+## Key moments
+
+* T1: a browser joins the chat, with participants list visible, then leaves
+* T2: a browser joins the chat, with participants list hidden, then leaves
+* T3: 10 browser joins, with participants list visible, then leave after 30 seconds
+* T4: 10 browser joins, with participants list hidden, then leave after 30 seconds
+
+## Run 01
+
+Result for running [this test suite](./results/01/).
+
+Plugin version: v8.0.4 + patch described in this document.
+
+See [Run output](./01.output.md).
+
+Prosody CPU usage:
+
+![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)
+
+Browsers CPU usage:
+
+![ChromeCPU](./results/01/monitor_chromium.png)
+
+Please find bellow the detail for each browser.
+
+Some notes:
+
+* The scale is not the same for every chart.
+* Browsers using Peertube users have an additionnal step: opening the Peertube login page, and submit the form.
+* My laptop was limitating the performances for these browsers.
+* in the table bellow, the first line is for browsers that were launched one by one (T1 and T2), following lines are for T3 and T4.
+
+|Participants list visible (T1/T3)|Participants list hidden (T2/T4)|Note|
+|--|--|--|
+|![CPU](./results/01/monitor_chromium_browser01_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser02_chromium_cpu.png)|
+|Single browser joining, anonymous user (T1 and T2)|
+|![CPU](./results/01/monitor_chromium_browser10_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser20_chromium_cpu.png)|Peertube user|
+|![CPU](./results/01/monitor_chromium_browser11_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser21_chromium_cpu.png)|Peertube user|
+|![CPU](./results/01/monitor_chromium_browser12_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser22_chromium_cpu.png)|Peertube user|
+|![CPU](./results/01/monitor_chromium_browser13_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser23_chromium_cpu.png)|Peertube user|
+|![CPU](./results/01/monitor_chromium_browser14_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser24_chromium_cpu.png)|Peertube user|
+|![CPU](./results/01/monitor_chromium_browser15_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser25_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/01/monitor_chromium_browser16_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser26_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/01/monitor_chromium_browser17_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser27_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/01/monitor_chromium_browser18_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser28_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/01/monitor_chromium_browser19_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser29_chromium_cpu.png)|Anonymous user|

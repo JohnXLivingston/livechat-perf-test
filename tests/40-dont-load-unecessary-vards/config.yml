@@ -27,7 +27,7 @@ tasks:
   - type: log
     chart_key: T1
   - type: chromium
-    name: browser0a
+    name: browser01
     duration: 3000
     headless: false
 
@@ -36,7 +36,7 @@ tasks:
   - type: log
     chart_key: T2
   - type: chromium
-    name: browser0a
+    name: browser02
     duration: 3000
     headless: false
     query_parameters:
@@ -48,48 +48,48 @@ tasks:
   - type: log
     chart_key: T3
   - type: chromium
-    name: browser1
+    name: browser10
     duration: 30000
     headless: false
     login: user_01
   - type: chromium
-    name: browser2
+    name: browser11
     duration: 30000
     headless: true
     login: user_02
   - type: chromium
-    name: browser3
+    name: browser12
     duration: 30000
     headless: true
     login: user_03
   - type: chromium
-    name: browser4
+    name: browser13
     duration: 30000
     headless: true
     login: user_04
   - type: chromium
-    name: browser5
+    name: browser14
     duration: 30000
     headless: true
     login: user_05
   - type: chromium
-    name: browser6
+    name: browser15
     duration: 30000
     headless: true
   - type: chromium
-    name: browser7
+    name: browser16
     duration: 30000
     headless: true
   - type: chromium
-    name: browser8
+    name: browser17
     duration: 30000
     headless: true
   - type: chromium
-    name: browser9
+    name: browser18
     duration: 30000
     headless: true
   - type: chromium
-    name: browser10
+    name: browser19
     duration: 30000
     headless: true
 
@@ -99,66 +99,66 @@ tasks:
   - type: log
     chart_key: T4
   - type: chromium
-    name: browser11
+    name: browser20
     duration: 30000
     headless: false
     login: user_01
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser12
+    name: browser21
     duration: 30000
     headless: true
     login: user_02
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser13
+    name: browser22
     duration: 30000
     headless: true
     login: user_03
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser14
+    name: browser23
     duration: 30000
     headless: true
     login: user_04
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser15
+    name: browser24
     duration: 30000
     headless: true
     login: user_05
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser16
+    name: browser25
     duration: 30000
     headless: true
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser17
+    name: browser26
     duration: 30000
     headless: true
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser18
+    name: browser27
     duration: 30000
     headless: true
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser19
+    name: browser28
     duration: 30000
     headless: true
     query_parameters:
       force_default_hide_muc_participants: "1"
   - type: chromium
-    name: browser20
+    name: browser29
     duration: 30000
     headless: true
     query_parameters:
