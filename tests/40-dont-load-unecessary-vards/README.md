@@ -51,6 +51,8 @@ Here is what this patch does:
 
 When a user sends a message, the vCard will be loaded if required (by the existing code).
 
+Note: when the chat is displayed aside a video, the occupant list is hidden by default. It is only shown by default when the user opens the chat in a separate browser tab. So, the case we are trying to optimize here is the default case (chat besides the video).
+
 The downside of this approach is that there is a little blinking effect when a user is posting his first message: first there is the default ConverseJS avatar, then it is replaced by the vCards when it is loaded:
 
 ![blinking effect](./blinking.gif)
@@ -124,3 +126,41 @@ Some notes:
 |![CPU](./results/01/monitor_chromium_browser17_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser27_chromium_cpu.png)|Anonymous user|
 |![CPU](./results/01/monitor_chromium_browser18_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser28_chromium_cpu.png)|Anonymous user|
 |![CPU](./results/01/monitor_chromium_browser19_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser29_chromium_cpu.png)|Anonymous user|
+
+### Run 01 Conclusion
+
+#### Prosody CPU
+
+As we can see, the CPU load is a little higher at T3 than T4.
+So we can confirm that the proposed patch helps on the server side.
+
+Here there is only 10 browsers joining (my laptop can't handle more). There are also 100 bots, but there are not loading vCards in the test. As we saw in previous tests, the vCard loading complexity is O(n²), so the gain will be far more important with more users joining.
+
+#### Chrome CPU
+
+When comparing `browser01` (T1) and `browser02` (T2), we can see lower CPU usage for `browser02`, as expected (please notice the y axis scale difference).
+It is not the CPU max that is relevant, but the duration of the load. It last only 1 second for `browser02`, and 2 or 3 for `browser01`.
+
+For `browser10` to `browser14` (T3) versus `browser20` to `browser24` (T4), the charts are harder to read.
+Moreover, these tests are with Peertube users. So most of the CPU is for the login process (show Peertube login page, submit form).
+We should ignore these browsers.
+
+For `browser15` to `browser19` (T3) versus `browser25` to `browser29` (T4), results are more readable.
+We can see improvements similar to the ones between `browser01` (T1) and `browser02` (T2).
+
+Here again, we can confirm that the proposed patch helps (on the front-end side this time).
+
+#### Conclusion
+
+The patch helps for performances.
+
+I'm not sure that this patch should be merged in ConverseJS upstream:
+
+* because of the blinking effect.
+* because vCards can have other use cases, for example changing the nickname of users. In the livechat plugin, this is not an issue, as nicknames are not stored in the vCards.
+
+So, i have to:
+
+* find how to include this patch in my building process
+* optimize the code (`m.get('hidden_occupants')` could be replaced by a variable, to avoid calls to `get`)
+* fix the blinking effect (maybe by removing the default avatar when the vCard is not loaded, i have just to check how i handle Peertube users without avatars)
