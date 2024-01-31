@@ -1,0 +1,157 @@
+tasks:
+  - type: create_live
+    user: user_01
+    name: create_live
+
+  - type: wait
+    duration: 1000
+
+  - type: websocket_anonymous_bot
+    name: wab_talking
+    duration: 60000
+    bot_number: 5
+    delay_between_bots: 1000
+    talk:
+      delay: 100
+      during: 55000
+  - type: wait
+    duration: 5100
+
+  - type: websocket_anonymous_bot
+    name: wab_viewers
+    duration: 60000
+    bot_number: 200
+  - type: wait
+    duration: 10000
+
+  - type: monitor_server
+    name: monitor_server
+    duration: 60000
+  - type: monitor_chromium
+    name: monitor_chromium
+    duration: 60000
+
+  - type: wait
+    duration: 2000
+
+  - type: chromium
+    name: browser1
+    duration: 20000
+    headless: false
+    login: user_01
+  - type: chromium
+    name: browser2
+    duration: 20000
+    headless: true
+    login: user_02
+  - type: chromium
+    name: browser3
+    duration: 20000
+    headless: true
+    login: user_03
+  - type: chromium
+    name: browser4
+    duration: 20000
+    headless: true
+    login: user_04
+  - type: chromium
+    name: browser5
+    duration: 20000
+    headless: true
+    login: user_05
+  - type: chromium
+    name: browser6
+    duration: 20000
+    headless: true
+  - type: chromium
+    name: browser7
+    duration: 20000
+    headless: true
+  - type: chromium
+    name: browser8
+    duration: 20000
+    headless: true
+  - type: chromium
+    name: browser9
+    duration: 20000
+    headless: true
+  - type: chromium
+    name: browser10
+    duration: 20000
+    headless: true
+
+  - type: wait
+    duration: 30000
+
+  - type: chromium
+    name: browser1
+    duration: 20000
+    headless: false
+    login: user_01
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser2
+    duration: 20000
+    headless: true
+    login: user_02
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser3
+    duration: 20000
+    headless: true
+    login: user_03
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser4
+    duration: 20000
+    headless: true
+    login: user_04
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser5
+    duration: 20000
+    headless: true
+    login: user_05
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser6
+    duration: 20000
+    headless: true
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser7
+    duration: 20000
+    headless: true
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser8
+    duration: 20000
+    headless: true
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser9
+    duration: 20000
+    headless: true
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+  - type: chromium
+    name: browser10
+    duration: 20000
+    headless: true
+    query_parameters:
+      force_default_hide_muc_participants: "1"
+
+  - type: wait
+    duration: 50000
+
+  - type: delete_current_live # this will delete the current live, only if it was created for the test!
+    name: delete_current_live
+    user: user_01 # must provide the user that has created the video

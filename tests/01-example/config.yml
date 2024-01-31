@@ -33,6 +33,9 @@ tasks:
     nickname: talkingBot
     talk:
       delay: 1000
+    query_parameters:
+      # You can add custom url parameters to the chat url
+      a_query_parameter: a_value
 
   - type: external_component_bot
     name: external_component_bot_1

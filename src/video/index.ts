@@ -1,4 +1,5 @@
 import { Server } from '../server'
+import { URL } from 'node:url'
 
 let singleton: Video | null = null
 
@@ -17,10 +18,19 @@ class Video {
   }
 
   /**
-   * Returns the video url
+   * Returns the chat url
+   * @param queryParameters Query parameters to add to the url.
    */
-  public url (): string {
-    return this.server.url() + 'plugins/livechat/router/webchat/room/' + this.uuid
+  public chatUrl (queryParameters?: {[key: string]: string}): string {
+    const base = this.server.url() + 'plugins/livechat/router/webchat/room/' + this.uuid
+    if (queryParameters === undefined) {
+      return base
+    }
+    const u = new URL(base)
+    for (const k in queryParameters) {
+      u.searchParams.set(k, queryParameters[k])
+    }
+    return u.toString()
   }
 
   /**

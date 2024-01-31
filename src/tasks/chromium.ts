@@ -28,6 +28,7 @@ class ChromiumTask extends Task {
   protected readonly talkOptions: TalkOptions | null = null
   protected talkInterval: NodeJS.Timeout | null = null
   protected readonly trace: boolean = false
+  protected readonly queryParameters: {[key: string]: string} | undefined = undefined
 
   constructor (suite: TestSuite, definition: any) {
     super(suite, definition)
@@ -57,12 +58,16 @@ class ChromiumTask extends Task {
       }
     }
 
+    if ('query_parameters' in definition) {
+      this.queryParameters = definition.query_parameters
+    }
+
     this.trace = !!definition.trace
   }
 
   public async start (): Promise<void> {
     const video = Video.singleton()
-    const url = video.url()
+    const url = video.chatUrl(this.queryParameters)
 
     this.log('Loading url ' + url + ' using puppeteer...')
 
