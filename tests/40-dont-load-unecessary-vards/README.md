@@ -164,3 +164,4 @@ So, i have to:
 * find how to include this patch in my building process
 * optimize the code (`m.get('hidden_occupants')` could be replaced by a variable, to avoid calls to `get`)
 * fix the blinking effect (maybe by removing the default avatar when the vCard is not loaded, i have just to check how i handle Peertube users without avatars)
+* run tests again
