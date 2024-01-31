@@ -108,6 +108,7 @@ class ChromiumTask extends Task {
         this.log('Closing the browser.')
         await page.close()
         await browser.close()
+        mainPids.delete(this)
         resolve(true)
       }, this.duration)
     })
