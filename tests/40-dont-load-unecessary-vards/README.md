@@ -12,7 +12,7 @@ The solution proposed here consist to modify ConverseJS to avoid loading all vCa
 
 The proposed patch is:
 
-```patch
+```git
 diff --git a/src/headless/plugins/vcard/index.js b/src/headless/plugins/vcard/index.js
 index 067e7bb94..4199583f1 100644
 --- a/src/headless/plugins/vcard/index.js
