@@ -83,7 +83,9 @@ monitor_server / prosody_cpu standard deviation: 11.09
 |Standard deviation: 14.47|Standard deviation: 11.09|
 
 We can also compute CPU average when all bots are connected, and are talking.
-To do this, just use the timecode of following logs: 'Bot wab 20 starts talking' and 'Bot wab 1 stops talking'.
+So we can compare performance on the way Prosody handles messages with or without carbons (when we compare the CPU on the full period, there is also an overhead for the `iq` `set` messages, when the bots ask to enable the feature).
+
+To do this, just use the timecode of following logs: `Bot wab 20 starts talking` and `Bot wab 1 stops talking`.
 
 ```bash
 for run in '01' '01b' '02' '02b'; do \
