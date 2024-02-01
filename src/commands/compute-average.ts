@@ -71,8 +71,23 @@ function initComputeAverage (program: Command): void {
           t += values[i].value
           n++
         }
-        const a = t / n
-        console.log(`${taskName} / ${dataName}: ${a.toFixed(2)}`)
+        const mean = t / n
+        console.log(`${taskName} / ${dataName} average: ${mean.toFixed(2)}`)
+
+        // Computing standard deviation
+        let acc = 0
+        for (let i = 0; i < values.length; i++) {
+          if (after !== undefined && values[i].timestamp < after) {
+            continue
+          }
+          if (before !== undefined && values[i].timestamp > before) {
+            continue
+          }
+          const v = values[i].value
+          acc += (v - mean) * (v - mean)
+        }
+        const deviation = Math.sqrt(acc / (n - 1))
+        console.log(`${taskName} / ${dataName} standard deviation: ${deviation.toFixed(2)}`)
       }
     }
   })
