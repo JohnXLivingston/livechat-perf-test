@@ -43,6 +43,14 @@ We also disable carbons emulation for bots (as they are not able to ready disco 
 
 ![ProsodyCPU](results/02/monitor_server_prosody_cpu.png)
 
+## Run 02b
+
+Same as 02, just testing again.
+
+## Run 01b
+
+Same as 01, just testing again.
+
 ## Conclusion
 
 Calculating CPU average are calculated between T1 and the last bot output:
@@ -55,6 +63,16 @@ monitor_server / prosody_cpu standard deviation: 13.61
 npm run start -- compute-average --test '50-anonymous-carbons' --run-name '02' --after 7.626  --before 57.288
 monitor_server / prosody_cpu average: 8.61
 monitor_server / prosody_cpu standard deviation: 12.02
+
+npm run start -- compute-average --test '50-anonymous-carbons' --run-name '01b' --after 7.425  --before 57.066
+monitor_server / prosody_cpu average: 9.99
+monitor_server / prosody_cpu standard deviation: 14.47
+
+npm run start -- compute-average --test '50-anonymous-carbons' --run-name '02b' --after 6.666  --before 56.331
+monitor_server / prosody_cpu average: 7.95
+monitor_server / prosody_cpu standard deviation: 11.09
+
+
 ```
 
 |Run 01|Run 02|
@@ -62,3 +80,6 @@ monitor_server / prosody_cpu standard deviation: 12.02
 |![ProsodyCPU](results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](results/02/monitor_server_prosody_cpu.png)|
 |Average CPU: 9.67%|Average CPU: 8.61%|
 |Standard deviation: 13.61|Standard deviation: 12.02|
+|![ProsodyCPU](results/01b/monitor_server_prosody_cpu.png)|![ProsodyCPU](results/02b/monitor_server_prosody_cpu.png)|
+|Average CPU: 9.99%|Average CPU: 7.95%|
+|Standard deviation: 14.47|Standard deviation: 11.09|

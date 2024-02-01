@@ -29,7 +29,7 @@ tasks:
       disco: true # get disco info
       roster: true # get roster
       vcards: false # get vcards
-      carbons: false # activate carbon
+      carbons: true # activate carbon
       mam: false # retrieve last messages
 
   - type: wait
