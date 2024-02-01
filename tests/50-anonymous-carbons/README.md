@@ -71,8 +71,6 @@ monitor_server / prosody_cpu standard deviation: 14.47
 npm run start -- compute-average --test '50-anonymous-carbons' --run-name '02b' --after 6.666  --before 56.331
 monitor_server / prosody_cpu average: 7.95
 monitor_server / prosody_cpu standard deviation: 11.09
-
-
 ```
 
 |Run 01|Run 02|
@@ -83,3 +81,37 @@ monitor_server / prosody_cpu standard deviation: 11.09
 |![ProsodyCPU](results/01b/monitor_server_prosody_cpu.png)|![ProsodyCPU](results/02b/monitor_server_prosody_cpu.png)|
 |Average CPU: 9.99%|Average CPU: 7.95%|
 |Standard deviation: 14.47|Standard deviation: 11.09|
+
+We can also compute CPU average when all bots are connected, and are talking.
+To do this, just use the timecode of following logs: 'Bot wab 20 starts talking' and 'Bot wab 1 stops talking'.
+
+```bash
+for run in '01' '01b' '02' '02b'; do \
+  npm run start -- compute-average --test '50-anonymous-carbons' --run-name $run \
+    --after $(grep 'Bot wab 20 starts talking' tests/50-anonymous-carbons/$run.output.md | cut -d '(' -f 2 | cut -d 's' -f 1) \
+    --before $(grep 'Bot wab 1 stops talking' tests/50-anonymous-carbons/$run.output.md | cut -d '(' -f 2 | cut -d 's' -f 1)
+done
+
+Computing averages for test 50-anonymous-carbons, run 01
+monitor_server / prosody_cpu average: 17.72
+monitor_server / prosody_cpu standard deviation: 16.71
+
+Computing averages for test 50-anonymous-carbons, run 01b
+monitor_server / prosody_cpu average: 17.71
+monitor_server / prosody_cpu standard deviation: 17.54
+
+Computing averages for test 50-anonymous-carbons, run 02
+monitor_server / prosody_cpu average: 15.27
+monitor_server / prosody_cpu standard deviation: 15.41
+
+Computing averages for test 50-anonymous-carbons, run 02b
+monitor_server / prosody_cpu average: 13.89
+monitor_server / prosody_cpu standard deviation: 13.54
+```
+
+||01x|02x|
+|--|--|--|
+|01 / 02 Average (deviation)|17.72% (16.71)|15.27% (15.41)|
+|01b / 02b Average (deviation)|17.71% (17.54)|13.89% (13.54)|
+
+Seems we have best performances by disabling Message Carbons. The difference is not big, but we didn't expect huge difference anyway.
