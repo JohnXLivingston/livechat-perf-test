@@ -49,13 +49,16 @@ Calculating CPU average are calculated between T1 and the last bot output:
 
 ```bash
 npm run start -- compute-average --test '50-anonymous-carbons' --run-name '01' --after 6.809  --before 56.498
-monitor_server / prosody_cpu: 9.67
+monitor_server / prosody_cpu average: 9.67
+monitor_server / prosody_cpu standard deviation: 13.61
 
-npm run start -- compute-average --test '50-anonymous-carbons' --run-name '01' --after 7.626  --before 57.288
-monitor_server / prosody_cpu: 9.65
+npm run start -- compute-average --test '50-anonymous-carbons' --run-name '02' --after 7.626  --before 57.288
+monitor_server / prosody_cpu average: 8.61
+monitor_server / prosody_cpu standard deviation: 12.02
 ```
 
 |Run 01|Run 02|
 |--|--|
 |![ProsodyCPU](results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](results/02/monitor_server_prosody_cpu.png)|
-|Average CPU: 9.67%|Average CPU: 9.65%|
+|Average CPU: 9.67%|Average CPU: 8.61%|
+|Standard deviation: 13.61|Standard deviation: 12.02|
