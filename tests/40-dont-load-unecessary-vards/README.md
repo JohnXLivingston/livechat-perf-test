@@ -114,8 +114,7 @@ Some notes:
 
 |Participants list visible (T1/T3)|Participants list hidden (T2/T4)|Note|
 |--|--|--|
-|![CPU](./results/01/monitor_chromium_browser01_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser02_chromium_cpu.png)|
-|Single browser joining, anonymous user (T1 and T2)|
+|![CPU](./results/01/monitor_chromium_browser01_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser02_chromium_cpu.png)|Single browser joining, anonymous user (T1 and T2)|
 |![CPU](./results/01/monitor_chromium_browser10_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser20_chromium_cpu.png)|Peertube user|
 |![CPU](./results/01/monitor_chromium_browser11_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser21_chromium_cpu.png)|Peertube user|
 |![CPU](./results/01/monitor_chromium_browser12_chromium_cpu.png)|![CPU](./results/01/monitor_chromium_browser22_chromium_cpu.png)|Peertube user|
@@ -165,3 +164,46 @@ So, i have to:
 * optimize the code (`m.get('hidden_occupants')` could be replaced by a variable, to avoid calls to `get`)
 * fix the blinking effect (maybe by removing the default avatar when the vCard is not loaded, i have just to check how i handle Peertube users without avatars)
 * run tests again
+
+## Run 02
+
+Here i implemented a cleaner version of the proposed patch.
+
+Result for running [this test suite](./results/02/).
+
+Plugin version: v8.0.4 + every commits until [a8e3524a94565d72443800d84efb0c5cdb650ca8](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/a8e3524a94565d72443800d84efb0c5cdb650ca8).
+
+See [Run output](./02.output.md).
+
+Prosody CPU usage:
+
+![ProsodyCPU](./results/02/monitor_server_prosody_cpu.png)
+
+Browsers CPU usage:
+
+![ChromeCPU](./results/02/monitor_chromium.png)
+
+|Participants list visible (T1/T3)|Participants list hidden (T2/T4)|Note|
+|--|--|--|
+|![CPU](./results/02/monitor_chromium_browser01_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser02_chromium_cpu.png)|Single browser joining, anonymous user (T1 and T2)|
+|![CPU](./results/02/monitor_chromium_browser10_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser20_chromium_cpu.png)|Peertube user|
+|![CPU](./results/02/monitor_chromium_browser11_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser21_chromium_cpu.png)|Peertube user|
+|![CPU](./results/02/monitor_chromium_browser12_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser22_chromium_cpu.png)|Peertube user|
+|![CPU](./results/02/monitor_chromium_browser13_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser23_chromium_cpu.png)|Peertube user|
+|![CPU](./results/02/monitor_chromium_browser14_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser24_chromium_cpu.png)|Peertube user|
+|![CPU](./results/02/monitor_chromium_browser15_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser25_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/02/monitor_chromium_browser16_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser26_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/02/monitor_chromium_browser17_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser27_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/02/monitor_chromium_browser18_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser28_chromium_cpu.png)|Anonymous user|
+|![CPU](./results/02/monitor_chromium_browser19_chromium_cpu.png)|![CPU](./results/02/monitor_chromium_browser29_chromium_cpu.png)|Anonymous user|
+
+### Run 01/02 comparison
+
+|Run 01|Run 02|
+|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/02/monitor_server_prosody_cpu.png)|
+|![ChromeCPU](./results/01/monitor_chromium.png)|![ChromeCPU](./results/02/monitor_chromium.png)|
+
+### Run 02 conclusion
+
+Results seems similar to those of run 01. A little less readable, but it is due to my laptop load, that was not the same as the other day.
