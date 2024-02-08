@@ -255,6 +255,9 @@ New avatars files are smaller:
 * old avatars average file size: 6.9Ko (120x120 jpg)
 * new avatars average file size: 4.02Ko (60x60 png)
 
+Example of old avatar: ![old](1.jpg)
+Example of new avatar: ![new](1.png)
+
 Result for running [this test suite](./results/04/).
 
 Plugin version: v8.1.0 + commit [b9b0eb41d9035f6686c85f2725f7df829ba8a68c](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/b9b0eb41d9035f6686c85f2725f7df829ba8a68c).
@@ -275,3 +278,5 @@ Browsers CPU usage:
 |--|--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)|
 |![ChromeCPU](./results/01/monitor_chromium.png)|![ChromeCPU](./results/03/monitor_chromium.png)|![ChromeCPU](./results/04/monitor_chromium.png)|
+
+Run 04 has unexpected data. It might be related to the fact that the test server is in production, and people are currently testing the plugin on another room.
