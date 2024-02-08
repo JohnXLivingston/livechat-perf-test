@@ -245,4 +245,33 @@ Browsers CPU usage:
 |Run 01|Run 02|Run 03|
 |--|--|--|
 |![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/02/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|
-|![ChromeCPU](./results/01/monitor_chromium.png)|![ChromeCPU](./results/02/monitor_chromium.png)|![ChromeCPU](./results/02/monitor_chromium.png)|
+|![ChromeCPU](./results/01/monitor_chromium.png)|![ChromeCPU](./results/02/monitor_chromium.png)|![ChromeCPU](./results/03/monitor_chromium.png)|
+
+## Run 04
+
+This run is on plugin version v8.1.0, with the new avatar set.
+New avatars files are smaller:
+
+* old avatars average file size: 6.9Ko (120x120 jpg)
+* new avatars average file size: 4.02Ko (60x60 png)
+
+Result for running [this test suite](./results/04/).
+
+Plugin version: v8.1.0 + commit [b9b0eb41d9035f6686c85f2725f7df829ba8a68c](https://github.com/JohnXLivingston/peertube-plugin-livechat/commit/b9b0eb41d9035f6686c85f2725f7df829ba8a68c).
+
+See [Run output](./04.output.md).
+
+Prosody CPU usage:
+
+![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)
+
+Browsers CPU usage:
+
+![ChromeCPU](./results/04/monitor_chromium.png)
+
+### Run 01/03/04 comparison
+
+|Run 01|Run 03|Run 04|
+|--|--|--|
+|![ProsodyCPU](./results/01/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/03/monitor_server_prosody_cpu.png)|![ProsodyCPU](./results/04/monitor_server_prosody_cpu.png)|
+|![ChromeCPU](./results/01/monitor_chromium.png)|![ChromeCPU](./results/03/monitor_chromium.png)|![ChromeCPU](./results/04/monitor_chromium.png)|
